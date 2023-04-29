@@ -11,7 +11,7 @@ function registerUser() {
     
     $.ajax({
       type: 'POST',
-      url: 'dataHandler.php', 
+      url: '../backend/config/dataHandler.php', 
       data: {
         salutation: salutation,
         vorname: vorname,
@@ -26,8 +26,12 @@ function registerUser() {
       success: function(response) {
         if (response.status == 'success') {
           window.location.href = 'success.html';
+            console.log(response.message);
+            console.log("success");
         } else {
           alert(response.message);
+            console.log(response.message);
+            console.log("error");
         }
       },
       error: function() {
