@@ -6,7 +6,7 @@ class DataHandler {
         Database::connect();
         $this->db = Database::$db;
     }
-    
+
   public function handleData($data) {
     $salutation = $this->db->real_escape_string($data['salutation']);
     $vorname = $this->db->real_escape_string($data['vorname']);
@@ -19,6 +19,10 @@ class DataHandler {
     $password = $this->db->real_escape_string($data['password']);
 
     $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+
+    //Sample data INSERT
+    //INSERT INTO users (salutation, vorname, nachname, adresse, plz, ort, email, username, password)
+    //VALUES ('mr', 'John', 'Doe', '123 Main St', '1234', 'Anytown', 'johndoe@example.com', 'johndoe', 'password1'),
 
     $sql = "INSERT INTO users (salutation, vorname, nachname, adresse, plz, ort, email, username, password)
      VALUES ('$salutation', '$vorname', '$nachname', '$adresse', '$plz', '$ort', '$email', '$username', '$hashed_password')";
