@@ -17,6 +17,21 @@
 
 /* Carousel Style End */
 
+
+/* Promotion-Area Start */
+
+.promotion-area {
+    display: flex;
+
+    padding-top: 50px;
+    padding-bottom: 50px;
+    margin-bottom: 50px;
+    background-color: #61a3e1;
+}
+
+
+/* Promotion-Area End */
+
 .bg-light {
     --bs-bg-opacity: 1;
     background-color: black !important;
