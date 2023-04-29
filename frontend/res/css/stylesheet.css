@@ -2,6 +2,21 @@
     font-family: 'Roboto', sans-serif;
 }
 
+/* Carousel Style Start */
+.carousel-item {
+    height: 550px;
+}
+
+
+.carousel-caption {
+    background-color: rgba(0, 0, 0, 0.475);
+    color: rgb(255, 255, 255);
+    font-size: 30px;
+    font-weight: 500;
+}
+
+/* Carousel Style End */
+
 .bg-light {
     --bs-bg-opacity: 1;
     background-color: black !important;
@@ -25,8 +40,8 @@
 footer {
     position: relative;
     bottom: 0;
-    padding-top: 3%;
-    padding-bottom: 3%;
+    padding-top: 50px;
+    padding-bottom: 50px;
     width: 100%;
     background-color: black;
 
@@ -58,14 +73,21 @@ footer ul li a:hover {
 }
 
 /* Card Style Start */
+.card-deck {
+    padding-top: 50px;
+    padding-bottom: 50px;
+}
 
 .product-card {
-
-    width: 18rem;
-    height: 20rem;
+    border: none;
+    margin-left: 10px;
+    margin-right: 10px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
 }
 
 /* Card Style End */
+
 
 /* Login Style Start */
 
@@ -78,7 +100,6 @@ body {
     padding: 20px;
     border: none;
     border-radius: 10px;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
 }
 
 .form-group label {
