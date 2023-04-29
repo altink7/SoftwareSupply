@@ -59,10 +59,13 @@ footer ul li a:hover {
 
 /* Card Style Start */
 
-.card {
+.product-card {
+
     width: 18rem;
     height: 20rem;
 }
+
+/* Card Style End */
 
 /* Login Style Start */
 
