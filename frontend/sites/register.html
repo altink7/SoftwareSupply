@@ -98,6 +98,15 @@
     </footer>
 
     <script src="../js/register-validation.js"></script>
+    <script src="register-ajax.js"></script>
+	<script>
+		$(document).ready(function() {
+			$('#register-form').submit(function(event) {
+				event.preventDefault();
+				registerUser();
+			});
+		});
+	</script>
 
 </body>
 </html>
