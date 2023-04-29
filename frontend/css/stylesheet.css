@@ -7,15 +7,19 @@
     background-color: black !important;
 }
 
-.bg-light:hover {
-    background-color: #5890b3 !important;
-}
-
 .collapse {
     color: white;
     font-size: 20px;
     margin-right: 30px;
     margin-left: 30px;
+}
+
+.navbar-toggler {
+    background-color: white;
+}
+
+.nav-link:hover {
+    text-decoration: underline 2px;
 }
 
 footer {
@@ -28,10 +32,6 @@ footer {
 
 }
 
-
-footer:hover {
-    background-color: rgb(88, 144, 179);
-}
 
 footer ul {
     padding-left: 0px;
