@@ -2,6 +2,22 @@
     font-family: 'Roboto', sans-serif;
 }
 
+.bg-light {
+    --bs-bg-opacity: 1;
+    background-color: black !important;
+}
+
+.bg-light:hover {
+    background-color: #5890b3 !important;
+}
+
+.collapse {
+    color: white;
+    font-size: 20px;
+    margin-right: 30px;
+    margin-left: 30px;
+}
+
 footer {
     position: relative;
     bottom: 0;
