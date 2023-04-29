@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="stylesheet.css">
+    <title>SoftwareSupply</title>
+</head>
+
+<body>
+    <!-- Login -->
+    <form method="post" action="login.js">
+        <label for="username">Username:</label> <br>
+        <input type="text" name="username" id="usernameInput">
+        <br>
+        <label for="password">Passwort:</label><br>
+        <input type="password" name="password" id="password" minlength="8">
+        <br>
+
+        <input id="submitButton" type="submit" value="Anmelden">
+
+        <p>Noch nicht registriert?</p>
+        <a id="submitButton" class="register" href="register.js"><input type="button" value="Registrieren"></a>
+    </form>
+</body>
+
+</html>
