@@ -17,6 +17,7 @@
     width: fit-content;
 
     left: 50%;
+    bottom: 30%;
     transform: translateX(-50%);
     padding: 1% 2% 1% 2%;
     border-radius: 10px;
