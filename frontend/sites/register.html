@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="de">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -12,24 +13,26 @@
     <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
     <link rel="stylesheet" href="../res/css/stylesheet.css">
 </head>
-<nav class="navbar navbar-expand-lg bg-light">
+<nav class=" navbar navbar-expand-lg bg-light">
     <div class="container-fluid">
-        <a class="navbar-brand" href="index.html"> <img src="../res/img/logoblack.PNG" width="150" height="70"></a>
+        <a class="navbar-brand" href="index.html"> <img src="../res/img/favicon.png" width="80" height="80"></a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse justify-content-evenly text-center" id="navbarSupportedContent">
-            <a class="nav-link" href="product.html">News</a>
+            <a class="nav-link" href="shop.html">Shop</a>
             <a class="nav-link" href="about.html">Über Uns</a>
             <a class="nav-link" href="admin.html">Admin</a>
             <a class="nav-link" href="login.html">Login</a>
         </div>
     </div>
 </nav>
+
 <body style="background-image: url('../res/img/loginBG.jpg'); background-size: cover;">
     <!--Register Formular -->
-    <div class="container d-flex justify-content-center align-items-center vh-100" style="margin-top: 20%; margin-bottom: 20%;">
+    <div class="container d-flex justify-content-center align-items-center vh-100"
+        style="margin-top: 20%; margin-bottom: 20%;">
         <div class="card login-card">
             <div class="card-body">
                 <h2 class="card-title text-center">Register</h2>
@@ -41,44 +44,48 @@
                             <option value="ms">Frau</option>
                             <option value="other">Divers</option>
                         </select>
-                    <div class="form-group">
-                        <label for="username">Vorname</label>
-                        <input type="text" class="form-control" id="vorname" placeholder="Enter Vorname">
-                    </div>
-                    <div class="form-group">
-                        <label for="username">Nachname</label>
-                        <input type="text" class="form-control" id="nachname" placeholder="Enter Nachname">
-                    </div>
-                    <div>
-                        <label for="adresse">Adresse</label>
-                        <input type="text" class="form-control" id="adresse" placeholder="Enter Adresse">
-                    </div>
-                    <div>
-                        <label for="plz">PLZ</label>
-                        <input type="number" class="form-control" id="plz" name="plz" placeholder="Enter PLZ" pattern="\d{4}" required>
-                    </div>
-                    <div>
-                        <label for="ort">Ort</label>
-                        <input type="text" class="form-control" id="ort" placeholder="Enter Ort">
-                    </div>
-                    <div class="form-group">
-                        <label for="email">Email</label>
-                        <input type="email" class="form-control" id="email" placeholder="Enter email">
-                    </div>
-                    <div>
-                        <label for="username">Username</label>
-                        <input type="text" class="form-control" id="username" placeholder="Enter username">
-                    </div>
-                    <div class="form-group">
-                        <label for="password">Password</label>
-                        <input type="password" class="form-control" id="password" placeholder="Enter password" minlength="8">
-                    </div>
-                    <div class="form-group">
-                        <label for="confirm-password">Confirm Password</label>
-                        <input type="password" class="form-control" id="confirm-password" placeholder="Confirm password" minlength="8">
-                    </div>
-                    <button type="submit" class="btn btn-primary">Register</button>
-                    <button type="button" class="btn btn-secondary" onclick="location.href='login.html'">Login</button>
+                        <div class="form-group">
+                            <label for="username">Vorname</label>
+                            <input type="text" class="form-control" id="vorname" placeholder="Enter Vorname">
+                        </div>
+                        <div class="form-group">
+                            <label for="username">Nachname</label>
+                            <input type="text" class="form-control" id="nachname" placeholder="Enter Nachname">
+                        </div>
+                        <div>
+                            <label for="adresse">Adresse</label>
+                            <input type="text" class="form-control" id="adresse" placeholder="Enter Adresse">
+                        </div>
+                        <div>
+                            <label for="plz">PLZ</label>
+                            <input type="number" class="form-control" id="plz" name="plz" placeholder="Enter PLZ"
+                                pattern="\d{4}" required>
+                        </div>
+                        <div>
+                            <label for="ort">Ort</label>
+                            <input type="text" class="form-control" id="ort" placeholder="Enter Ort">
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" class="form-control" id="email" placeholder="Enter email">
+                        </div>
+                        <div>
+                            <label for="username">Username</label>
+                            <input type="text" class="form-control" id="username" placeholder="Enter username">
+                        </div>
+                        <div class="form-group">
+                            <label for="password">Password</label>
+                            <input type="password" class="form-control" id="password" placeholder="Enter password"
+                                minlength="8">
+                        </div>
+                        <div class="form-group">
+                            <label for="confirm-password">Confirm Password</label>
+                            <input type="password" class="form-control" id="confirm-password"
+                                placeholder="Confirm password" minlength="8">
+                        </div>
+                        <button type="submit" class="btn btn-primary card-button">Register</button>
+                        <button type="button" class="btn btn-primary card-button"
+                            onclick="location.href='login.html'">Login</button>
                     </div>
                 </form>
             </div>
@@ -92,22 +99,22 @@
             <li> <a href="kontakt.html">Kontakt</a> </li>
             <li> <a href="datenschutz.html">Datenschutz</a> </li>
             <p></p>
-            <p>Copyright &copy Montana GmbH</p>
-            <li> <a href="index.html"> <img src="../res/img/logoblack.PNG" width="150" height="70"></a> </li>
+            <p>Copyright &copy SoftwareSupply GmbH</p>
+            <li> <a href="index.html"> <img src="../res/img/favicon.png" width="80" height="80"></a> </li>
         </ul>
     </footer>
 
     <script src="../js/register-validation.js"></script>
     <script src="../js/register-ajax.js"></script>
-	<script>
-		$(document).ready(function() {
-			$('#register-form').submit(function(event) {
-				event.preventDefault();
-				registerUser();
-			});
-		});
-	</script>
+    <script>
+        $(document).ready(function () {
+            $('#register-form').submit(function (event) {
+                event.preventDefault();
+                registerUser();
+            });
+        });
+    </script>
 
 </body>
+
 </html>
-               
