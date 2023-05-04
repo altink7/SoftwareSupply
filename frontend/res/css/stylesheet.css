@@ -111,7 +111,10 @@ footer ul li a:hover {
     padding-top: 50px;
     padding-bottom: 50px;
 }
-
+.shopTitle {
+    text-align: center;
+    padding-bottom: 50px;
+}
 .product-card {
     border: none;
     margin-left: 10px;
@@ -155,23 +158,3 @@ body {
 
 /* Login Style End */
 
-/*Shop Style Start*/
-
-.containerShop {
-    background-image: url('../img/loginBG.jpg');
-    background-size: cover;
-    background-position: center;
-}
-
-.titleProducts {
-    color: white;
-    text-align: center;
-    padding-top: 50px;
-    padding-bottom: 50px;
-}
-
-.row {
-    margin: 0% 3% 0% 3%;
-}
-
-/*Shop Style End*/
