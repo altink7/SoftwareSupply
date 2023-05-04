@@ -31,66 +31,69 @@
 
 <body style="background-image: url('../res/img/loginBG.jpg'); background-size: cover;">
     <!--Register Formular -->
-    <div class="container d-flex justify-content-center align-items-center vh-100"
-        style="margin-top: 20%; margin-bottom: 20%;">
+    <div class="container d-flex justify-content-center align-items-center vh-100">
         <div class="card login-card">
             <div class="card-body">
                 <h2 class="card-title text-center">Register</h2>
                 <form>
-                    <div class="form-group">
-                        <label for="salutation">Anrede</label>
-                        <select class="form-control" id="salutation" name="salutation">
-                            <option value="mr">Herr</option>
-                            <option value="ms">Frau</option>
-                            <option value="other">Divers</option>
-                        </select>
-                        <div class="form-group">
-                            <label for="username">Vorname</label>
+                    <div class="form-row">
+                        <div class="form-group col-md-2">
+                            <label for="salutation">Anrede</label>
+                            <select class="form-control" id="salutation" name="salutation">
+                                <option value="mr">Herr</option>
+                                <option value="ms">Frau</option>
+                                <option value="other">Divers</option>
+                            </select>
+                        </div>
+                        <div class="form-group col-md-5">
+                            <label for="vorname">Vorname</label>
                             <input type="text" class="form-control" id="vorname" placeholder="Enter Vorname">
                         </div>
-                        <div class="form-group">
-                            <label for="username">Nachname</label>
+                        <div class="form-group col-md-5">
+                            <label for="nachname">Nachname</label>
                             <input type="text" class="form-control" id="nachname" placeholder="Enter Nachname">
                         </div>
-                        <div>
-                            <label for="adresse">Adresse</label>
-                            <input type="text" class="form-control" id="adresse" placeholder="Enter Adresse">
-                        </div>
-                        <div>
+                    </div>
+                    <div class="form-group">
+                        <label for="adresse">Adresse</label>
+                        <input type="text" class="form-control" id="adresse" placeholder="Enter Adresse">
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-3">
                             <label for="plz">PLZ</label>
-                            <input type="number" class="form-control" id="plz" name="plz" placeholder="Enter PLZ"
-                                pattern="\d{4}" required>
+                            <input type="number" class="form-control" id="plz" name="plz" placeholder="Enter PLZ" pattern="\d{4}" required>
                         </div>
-                        <div>
+                        <div class="form-group col-md-9">
                             <label for="ort">Ort</label>
                             <input type="text" class="form-control" id="ort" placeholder="Enter Ort">
                         </div>
-                        <div class="form-group">
-                            <label for="email">Email</label>
-                            <input type="email" class="form-control" id="email" placeholder="Enter email">
-                        </div>
-                        <div>
-                            <label for="username">Username</label>
-                            <input type="text" class="form-control" id="username" placeholder="Enter username">
-                        </div>
-                        <div class="form-group">
-                            <label for="password">Password</label>
-                            <input type="password" class="form-control" id="password" placeholder="Enter password"
-                                minlength="8">
-                        </div>
-                        <div class="form-group">
-                            <label for="confirm-password">Confirm Password</label>
-                            <input type="password" class="form-control" id="confirm-password"
-                                placeholder="Confirm password" minlength="8">
-                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" class="form-control" id="email" placeholder="Enter email">
+                    </div>
+                    <div class="form-group">
+                        <label for="username">Username</label>
+                        <input type="text" class="form-control" id="username" placeholder="Enter username">
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <input type="password" class="form-control" id="password" placeholder="Enter password" minlength="8">
+                    </div>
+                    <div class="form-group">
+                        <label for="confirm-password">Confirm Password</label>
+                        <input type="password" class="form-control" id="confirm-password" placeholder="Confirm password" minlength="8">
+                    </div>
+                    <div class="form-group">
                         <button type="submit" class="btn btn-primary card-button">Register</button>
-                        <button type="button" class="btn btn-primary card-button"
-                            onclick="location.href='login.html'">Login</button>
+                        <button type="button" class="btn btn-primary card-button" onclick="location.href='login.html'">Login</button>
                     </div>
                 </form>
             </div>
         </div>
     </div>
+    
+    
 
     <footer>
         <ul>
