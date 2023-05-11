@@ -36,4 +36,16 @@ class DataHandler {
   public function __destruct() {
     $this->db->close();
   }
+
+  public function getData() {
+    $sql = "SELECT * FROM users";
+    $result = $this->db->query($sql);
+    $data = array();
+    if ($result->num_rows > 0) {
+      while ($row = $result->fetch_assoc()) {
+        $data[] = $row;
+      }
+    }
+    return $data;
+  }
 }
