@@ -71,6 +71,17 @@
     text-decoration: underline 2px;
 }
 
+.shopping-cart-button {
+    border: none;
+    background-color: rgba(0, 0, 0, 0);
+    color: white;
+}
+
+.shopping-cart-button:hover {
+    background-color: #61a3e1;
+    border-color: #61a3e1;
+}
+
 footer {
     position: relative;
     bottom: 0;
@@ -111,16 +122,35 @@ footer ul li a:hover {
     padding-top: 50px;
     padding-bottom: 50px;
 }
+
 .shopTitle {
     text-align: center;
     padding-bottom: 50px;
 }
+
 .product-card {
     border: none;
     margin-left: 10px;
     margin-right: 10px;
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+.detail-product-card {
+    border: none;
+    margin-top: 50px;
+    margin-bottom: 50px;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.product-card-body {
+    border: #000 1px solid;
+    border-radius: 10px;
+    text-align: left;
+    padding: 10px 10px 10px 10px;
+    margin-top: auto;
+    margin-bottom: auto;
 }
 
 .card-button {
@@ -136,14 +166,40 @@ footer ul li a:hover {
     border-color: #61a3e1;
 }
 
+.card-title {
+    font-size: 30px;
+}
+
+.card-text {
+    font-size: 16px;
+}
 
 /* Card Style End */
+
+/* Warenkorb Start */
+
+.warenkorb {
+    margin-top: 50px;
+    margin-bottom: 20%;
+}
+
+
+/* Warenkorb End */
+
+.hrProduct {
+    width: 80%;
+    margin-left: 10%;
+    border: 0;
+    height: 2px;
+    background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(88, 144, 179), rgba(0, 0, 0, 0));
+
+}
 
 
 /* Login Style Start */
 
 body {
-    background-color: #f8f9fa;
+    background-color: white;
 }
 
 .login-card {
@@ -157,4 +213,3 @@ body {
 }
 
 /* Login Style End */
-
