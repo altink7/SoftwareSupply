@@ -212,4 +212,9 @@ body {
     font-weight: bold;
 }
 
+.registerForm {
+    margin-top: 50px;
+    margin-bottom: 50px;
+}
+
 /* Login Style End */

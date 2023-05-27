@@ -13,6 +13,7 @@
     <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
     <link rel="stylesheet" href="../res/css/stylesheet.css">
 </head>
+
 <nav class=" navbar navbar-expand-lg bg-light">
     <div class="container-fluid">
         <a class="navbar-brand" href="index.html"> <img src="../res/img/favicon.png" width="80" height="80"></a>
@@ -31,7 +32,7 @@
 
 <body style="background-image: url('../res/img/loginBG.jpg'); background-size: cover;">
     <!--Register Formular -->
-    <div class="container d-flex justify-content-center align-items-center vh-100">
+    <div class="container registerForm d-flex justify-content-center">
         <div class="card login-card">
             <div class="card-body">
                 <h2 class="card-title text-center">Register</h2>
@@ -61,7 +62,8 @@
                     <div class="form-row">
                         <div class="form-group col-md-3">
                             <label for="plz">PLZ</label>
-                            <input type="number" class="form-control" id="plz" name="plz" placeholder="Enter PLZ" pattern="\d{4}" required>
+                            <input type="number" class="form-control" id="plz" name="plz" placeholder="Enter PLZ"
+                                pattern="\d{4}" required>
                         </div>
                         <div class="form-group col-md-9">
                             <label for="ort">Ort</label>
@@ -78,22 +80,25 @@
                     </div>
                     <div class="form-group">
                         <label for="password">Password</label>
-                        <input type="password" class="form-control" id="password" placeholder="Enter password" minlength="8">
+                        <input type="password" class="form-control" id="password" placeholder="Enter password"
+                            minlength="8">
                     </div>
                     <div class="form-group">
                         <label for="confirm-password">Confirm Password</label>
-                        <input type="password" class="form-control" id="confirm-password" placeholder="Confirm password" minlength="8">
+                        <input type="password" class="form-control" id="confirm-password" placeholder="Confirm password"
+                            minlength="8">
                     </div>
                     <div class="form-group">
                         <button type="submit" class="btn btn-primary card-button">Register</button>
-                        <button type="button" class="btn btn-primary card-button" onclick="location.href='login.html'">Login</button>
+                        <button type="button" class="btn btn-primary card-button"
+                            onclick="location.href='login.html'">Login</button>
                     </div>
                 </form>
             </div>
         </div>
     </div>
-    
-    
+
+
 
     <footer>
         <ul>
