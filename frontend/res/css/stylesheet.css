@@ -218,3 +218,8 @@ body {
 }
 
 /* Login Style End */
+
+.category-dropdown {
+    width: 30%;
+    margin-bottom: 20px;
+}
