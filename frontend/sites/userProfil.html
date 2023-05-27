@@ -11,6 +11,8 @@
         integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe"
         crossorigin="anonymous"></script>
     <link rel="stylesheet" href="../res/css/stylesheet.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
     <title>SoftwareSupply</title>
 </head>
 
@@ -26,11 +28,51 @@
             <div class="collapse navbar-collapse justify-content-evenly text-center" id="navbarSupportedContent">
                 <a class="nav-link" href="shop.html">Shop</a>
                 <a class="nav-link" href="about.html">Über Uns</a>
-                <a class="nav-link" href="admin.html">Admin</a>
                 <a class="nav-link" href="login.html">Login</a>
+                <a href="warenkorb.html" class="btn btn-primary shopping-cart-button">
+                    <i class="fas fa-shopping-cart"></i>
+                </a>
+
             </div>
         </div>
     </nav>
+
+    <body>
+        <div class="container">
+            <h1 class="mt-4">User Profil</h1>
+            <h2 class="mt-4">Stammdaten</h2>
+            <div class="mt-4">
+                <p><strong>Name: </strong>Max Mustermann</p>
+                <p><strong>Email: </strong>max.mustermann@gmail.com</p>
+                <p><strong>Geburtsdatum: </strong>01.01.1990</p>
+                <p><strong>Adresse: </strong>Musterstraße 123, 12345 Musterstadt</p>
+                <button class="btn btn-primary">Bearbeiten</button>
+            </div>
+
+            <h2 class="mt-4">Bestellungen</h2>
+            <table class="table mt-4">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Datum</th>
+                        <th scope="col">Produkt</th>
+                        <th scope="col">Anzahl</th>
+                        <th scope="col">Preis</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th scope="row">1</th>
+                        <td>01.01.2023</td>
+                        <td>Produkt 1</td>
+                        <td>2</td>
+                        <td>€100</td>
+                    </tr>
+                    <!-- Weitere Zeilen für zusätzliche Bestellungen -->
+                </tbody>
+            </table>
+        </div>
+    </body>
 
     <footer>
         <ul>
@@ -39,8 +81,8 @@
             <li> <a href="kontakt.html">Kontakt</a> </li>
             <li> <a href="datenschutz.html">Datenschutz</a> </li>
             <p></p>
-            <p>Copyright &copy Montana GmbH</p>
-            <li> <a href="index.html"> <img src="../res/img/logoblack.png" width="150" height="70"></a> </li>
+            <p>Copyright &copy SoftwareSupply GmbH</p>
+            <li> <a href="index.html"> <img src="../res/img/favicon.png" width="80" height="80"></a> </li>
         </ul>
     </footer>
 
