@@ -32,10 +32,10 @@ class API {
             return;
         }
         $response = $this->dataHandler->insertUser($data);
-        if ($response) {
-            $this->respond(200, $response);
+        if ($response !== null) {
+            $this->respond(200, array('status' => 'success', 'message' => $response));
         } else {
-            $this->respond(500, "Error processing data");
+            $this->respond(500, array('status' => 'error', 'message' => 'Error processing data'));
         }
     }
     

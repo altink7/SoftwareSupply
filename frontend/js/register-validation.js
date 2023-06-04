@@ -85,7 +85,7 @@ $(document).ready(function() {
         contentType: 'application/json',
         success: function(response) {
             if (response.status === 'success') {
-                $('#success-message').removeClass('d-none'); // Show the success message
+                $('#success-message').removeClass('d-none'); 
                 window.location.href = 'success.html';
                 console.log(response.message);
                 console.log('success');
