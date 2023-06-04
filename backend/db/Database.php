@@ -17,6 +17,7 @@ class Database {
             $this->conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             $this->conn->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
         } catch (PDOException $e) {
+            error_log("Connection failed: " . $e->getMessage());
             die("Connection failed: " . $e->getMessage());
         }
     }
@@ -25,26 +26,38 @@ class Database {
         $this->conn = null;
     }
 
-    public function insertCustomer($data) {
-        $sql = "INSERT INTO customers (salutation, vorname, nachname, adresse, plz, ort, email, username, password) 
-                VALUES (:salutation, :vorname, :nachname, :adresse, :plz, :ort, :email, :username, :password)";
+    public function insertUser($data) {
+        $sql = "INSERT INTO users (salutation, first_name, last_name, address, postal_code, city, email, username, password) 
+                VALUES (:salutation, :first_name, :last_name, :address, :postal_code, :city, :email, :username, :password)";
 
         try {
             $stmt = $this->conn->prepare($sql);
             $stmt->bindParam(':salutation', $data['salutation']);
-            $stmt->bindParam(':vorname', $data['vorname']);
-            $stmt->bindParam(':nachname', $data['nachname']);
-            $stmt->bindParam(':adresse', $data['adresse']);
-            $stmt->bindParam(':plz', $data['plz']);
-            $stmt->bindParam(':ort', $data['ort']);
+            $stmt->bindParam(':first_name', $data['vorname']);
+            $stmt->bindParam(':last_name', $data['nachname']);
+            $stmt->bindParam(':address', $data['adresse']);
+            $stmt->bindParam(':postal_code', $data['plz']);
+            $stmt->bindParam(':city', $data['ort']);
             $stmt->bindParam(':email', $data['email']);
             $stmt->bindParam(':username', $data['username']);
             $stmt->bindParam(':password', $data['password']);
             $stmt->execute();
+            return $this->conn->lastInsertId();
         } catch (PDOException $e) {
             return $e->getMessage();
         }
     }
+public function getUsers(){
+        $sql = "SELECT * FROM users";
+        try {
+            $stmt = $this->conn->prepare($sql);
+            $stmt->execute();
+            $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            return $result;
+        } catch (PDOException $e) {
+            return null;
+        }
+   } 
 }
 
 ?>
