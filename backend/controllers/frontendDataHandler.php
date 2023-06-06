@@ -4,16 +4,14 @@ class DataHandler {
     private $db;
 
     public function __construct() {
-        Database::connect();
-        $this->db = Database::$db;
+        $this->db = new Database();
+        $this->db->connect();
     }
 
     public function getUserData() {
-        $result = $this->db->query("SELECT * FROM users;");
-        $data = array();
-        while ($row = $result->fetch_assoc()) {
-            $data[] = $row;
-        }
+        $data = $this->db->getUsers();
         echo json_encode($data);
     }
 }
+
+?>

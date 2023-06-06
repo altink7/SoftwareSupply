@@ -28,16 +28,24 @@ class API {
     public function handlePost() {
         $data = json_decode(file_get_contents("php://input"), true);
         if ($data === null) {
-            $this->respond(400, "Invalid JSON data");
-            return;
+          $this->respond(400, "Invalid JSON data");
+          return;
         }
-        $response = $this->dataHandler->insertUser($data);
-        if ($response !== null) {
-            $this->respond(200, array('status' => 'success', 'message' => $response));
+      
+        $username = $data['username'];
+        $password = $data['password'];
+      
+        // Retrieve the user from the database using the provided username
+        $user = $this->dataHandler->getUserByUsername($username);
+      
+        if ($user !== null && $this->dataHandler->verifyPassword($password, $user['password'])) {
+          // User found and password matches, return success response
+          $this->respond(200, array('status' => 'success', 'message' => 'Login successful'));
         } else {
-            $this->respond(500, array('status' => 'error', 'message' => 'Error processing data'));
+          // User not found or password does not match, return error response
+          $this->respond(401, array('status' => 'error', 'message' => 'Invalid username or password'));
         }
-    }
+      }
     
     public function handleGet() {
         $response = $this->dataHandler->getUsers();
