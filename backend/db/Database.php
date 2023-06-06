@@ -40,14 +40,18 @@ class Database {
             $stmt->bindParam(':city', $data['ort']);
             $stmt->bindParam(':email', $data['email']);
             $stmt->bindParam(':username', $data['username']);
-            $stmt->bindParam(':password', $data['password']);
+
+            $hashedPassword = $this->hashPassword($data['password']);
+            $stmt->bindParam(':password', $hashedPassword);
+
             $stmt->execute();
             return $this->conn->lastInsertId();
         } catch (PDOException $e) {
             return $e->getMessage();
         }
     }
-public function getUsers(){
+
+    public function getUsers(){
         $sql = "SELECT * FROM users";
         try {
             $stmt = $this->conn->prepare($sql);
@@ -57,7 +61,13 @@ public function getUsers(){
         } catch (PDOException $e) {
             return null;
         }
-   } 
-}
+    }
 
-?>
+    private function hashPassword($password) {
+        return password_hash($password, PASSWORD_DEFAULT);
+    }
+
+    public function verifyPassword($password, $hashedPassword) {
+        return password_verify($password, $hashedPassword);
+    }
+}
