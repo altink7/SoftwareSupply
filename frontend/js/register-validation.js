@@ -65,7 +65,7 @@ $(document).ready(function () {
         var email = $('#email').val();
         var username = $('#username').val();
         var password = $('#password').val();
-        
+
         var data = {
             salutation: salutation,
             vorname: vorname,
@@ -78,7 +78,7 @@ $(document).ready(function () {
             password: password,
             request_type: 'register'
         };
-        
+
         $.ajax({
             type: 'POST',
             url: 'http://localhost/SoftwareSupply/backend/api/api.php',
@@ -106,7 +106,7 @@ $(document).ready(function () {
                 console.log('Response: ' + responseText);
             }
         });
-        
+
     }
 
     $('form').submit(function (event) {
