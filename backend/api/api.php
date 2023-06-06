@@ -67,20 +67,13 @@ class API {
             $this->respond(401, array('status' => 'error', 'message' => 'Invalid username or password'));
         }
     }
-    
     public function handleRegister($data) {
-        $data = json_decode(file_get_contents("php://input"), true);
-        if ($data === null) {
-            $this->respond(400, "Invalid JSON data");
-            return;
-        }
         $response = $this->dataHandler->insertUser($data);
         if ($response !== null) {
-            $this->respond(200, array('status' => 'success', 'message' => $response));
+            $this->respond(200, array('status' => 'success', 'message' => 'Registration successful'));
         } else {
             $this->respond(500, array('status' => 'error', 'message' => 'Error processing data'));
         }
-        $this->respond(200, array('status' => 'success', 'message' => 'Registration successful'));
     }
     
     public function handleGet() {
