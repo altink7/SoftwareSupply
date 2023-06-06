@@ -71,7 +71,8 @@ class Database {
             return $e->getMessage();
         }
     }
-public function getUsers(){
+
+    public function getUsers(){
         $sql = "SELECT * FROM users";
         try {
             $stmt = $this->conn->prepare($sql);
@@ -116,5 +117,3 @@ public function getUsers(){
         return password_verify($password, $hashedPassword);
     }
 }
-
-?>
