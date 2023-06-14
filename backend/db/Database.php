@@ -85,7 +85,7 @@ class Database {
         }
    } 
 
-   public function getProducts(){
+   public function getProducts() {
     $sql = "SELECT * FROM product";
     try {
         $stmt = $this->conn->prepare($sql);
@@ -94,8 +94,9 @@ class Database {
         return $result;
     } catch (PDOException $e) {
         return null;
-        }
     }
+}
+
 
     public function getUserByUsernameOrEmail($usernameOrEmail) {
         $sql = "SELECT * FROM users WHERE username = :username OR email = :email";

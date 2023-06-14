@@ -77,13 +77,18 @@ class API {
     }
     
     public function handleGet() {
-        $response = $this->dataHandler->getUsers();
+        try {
+        $response = $this->dataHandler->getProducts();
         if ($response !== null) {
             $this->respond(200, $response);
         } else {
-            $this->respond(500, "Error retrieving data");
+            $this->respond(500, array('status' => 'error', 'message' => 'Error retrieving data'));
+        }
+        } catch (Exception $e) {
+            $this->respond(500, array('status' => 'error', 'message' => $e->getMessage()));
         }
     }
+    
     
     public function respond($status, $data = null) {
         // Set CORS headers
