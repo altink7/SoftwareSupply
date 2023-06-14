@@ -52,7 +52,7 @@ class API {
         $password = $data['password'];
     
         // Retrieve the user from the database using the provided username
-        $user = $this->dataHandler->getUserByUsername($username);
+        $user = $this->dataHandler->getUserByUsernameOrEmail($username);
     
         if ($user !== null && $this->dataHandler->verifyPassword($password, $user['password'])) {
             // User found and password matches, create a session

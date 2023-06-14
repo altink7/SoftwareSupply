@@ -65,6 +65,7 @@ $(document).ready(function () {
         var email = $('#email').val();
         var username = $('#username').val();
         var password = $('#password').val();
+        var payment = $('#payment').val();
 
         var data = {
             salutation: salutation,
@@ -76,8 +77,11 @@ $(document).ready(function () {
             email: email,
             username: username,
             password: password,
+            payment: payment,
             request_type: 'register'
         };
+        
+        console.log(data)
 
         $.ajax({
             type: 'POST',

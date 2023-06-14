@@ -27,8 +27,8 @@ class Database {
     }
 
     public function insertUser($data) {
-        $sql = "INSERT INTO users (salutation, first_name, last_name, address, postal_code, city, email, username, password) 
-                VALUES (:salutation, :first_name, :last_name, :address, :postal_code, :city, :email, :username, :password)";
+        $sql = "INSERT INTO users (salutation, first_name, last_name, address, postal_code, city, email, username, password, payment) 
+                VALUES (:salutation, :first_name, :last_name, :address, :postal_code, :city, :email, :username, :password, :payment)";
 
         try {
             $stmt = $this->conn->prepare($sql);
@@ -40,6 +40,7 @@ class Database {
             $stmt->bindParam(':city', $data['ort']);
             $stmt->bindParam(':email', $data['email']);
             $stmt->bindParam(':username', $data['username']);
+            $stmt->bindParam(':payment', $data['payment']);
 
             $hashedPassword = $this->hashPassword($data['password']);
             $stmt->bindParam(':password', $hashedPassword);
@@ -96,18 +97,21 @@ class Database {
         }
     }
 
-    public function getUserByUsername($username) {
-        $sql = "SELECT * FROM users WHERE username = :username";
+    public function getUserByUsernameOrEmail($usernameOrEmail) {
+        $sql = "SELECT * FROM users WHERE username = :username OR email = :email";
         try {
           $stmt = $this->conn->prepare($sql);
-          $stmt->bindParam(':username', $username);
+          $stmt->bindParam(':username', $usernameOrEmail);
+          $stmt->bindParam(':email', $usernameOrEmail);
           $stmt->execute();
           $result = $stmt->fetch(PDO::FETCH_ASSOC);
           return $result;
         } catch (PDOException $e) {
+          // Handle the exception, e.g., log the error or return an error response
           return null;
         }
       }
+      
 
     private function hashPassword($password) {
         return password_hash($password, PASSWORD_DEFAULT);
