@@ -1,37 +1,38 @@
 $(document).ready(function() {
-    // Make an AJAX GET request to retrieve products data from the API
     $.ajax({
-        url: 'http://localhost/SoftwareSupply/backend/api/api.php',
         type: 'GET',
-    success: function(response) {
-        if (response.status === 'success') {
-            console.log(response.data);
-        // Iterate over the products and create a card for each product
-            var productList = $('#productList');
-            response.data.forEach(function(product) {
-            var card = $('<div>', { class: 'col' });
-            var cardInner = $('<div>', { class: 'card h-100 product-card' });
-            //var cardImg = $('<img>', { class: 'card-img-top', src: product.image, alt: 'Product Image' });
-            var cardBody = $('<div>', { class: 'card-body' });
-            var cardTitle = $('<h5>', { class: 'card-title', text: product.title });
-            var cardText = $('<p>', { class: 'card-text', text: product.description });
-            var cardFooter = $('<div>', { class: 'card-footer' });
-            var cardButton = $('<a>', { href: 'productDetail.html', class: 'btn btn-primary card-button', text: 'Shop' });
-      
-            cardBody.append(cardTitle, cardText);
-            cardFooter.append(cardButton);
-            cardInner.append(cardImg, cardBody, cardFooter);
-            card.append(cardInner);
-            productList.append(card);
-            });
-        } else {
-            console.error('Error: ' + response.message);
-        }
-    },
+        dataType: 'json',
+        contentType: 'application/json',
+        url: 'http://localhost/SoftwareSupply/backend/api/api.php',
+        success: function(response) {
+            if (response.length > 0) {  // Check if there is any data in the response
+                var productList = $('#productList');
+                response.forEach(function(product) {
+                    var card = $('<div class="card"></div>');
+                    var cardInner = $('<div class="card-inner"></div>');
+                    var cardBody = $('<div class="card-body"></div>');
+                    var cardTitle = $('<h2 class="card-title"></h2>');
+                    var cardText = $('<p></p>');
+                    var cardFooter = $('<div class="card-footer"></div>');
+                    var cardButton = $('<button class="btn btn-primary">Add to cart</button>');
+
+                    cardTitle.text(product.title);
+                    cardText.text(product.description);
+                    cardFooter.text('Price: $' + product.price);
+                    cardBody.append(cardTitle);
+                    cardBody.append(cardText);
+                    cardBody.append(cardButton);
+                    cardInner.append(cardBody);
+                    cardInner.append(cardFooter);
+                    card.append(cardInner);
+                    productList.append(card);
+                });
+            } else {
+                console.error('Error: No data found.');
+            }
+        },
         error: function(xhr, status, error) {
             console.error('AJAX Error: ' + error);
         }
     });
 });
-      
-  
