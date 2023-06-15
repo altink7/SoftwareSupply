@@ -3,7 +3,7 @@ $(document).ready(function() {
         type: 'GET',
         dataType: 'json',
         contentType: 'application/json',
-        url: 'http://localhost/SoftwareSupply/backend/api/api.php',
+        url: 'http://localhost/SoftwareSupply/backend/api/api.php?type=products',
         success: function(response) {
             if (response.length > 0) {  // Check if there is any data in the response
                 var productList = $('#productList');
