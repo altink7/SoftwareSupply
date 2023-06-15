@@ -94,9 +94,21 @@ class Database {
         return $result;
     } catch (PDOException $e) {
         return null;
+        }
     }
-}
 
+    public function getProductsByKate($kategorie) {
+        $sql = "SELECT * FROM product WHERE kategorie = :kategorie";
+        try {
+            $stmt = $this->conn->prepare($sql);
+            $stmt->bindParam(':kategorie', $kategorie);
+            $stmt->execute();
+            $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            return $result;
+        } catch (PDOException $e) {
+            return null;
+        }
+    }
 
     public function getUserByUsernameOrEmail($usernameOrEmail) {
         $sql = "SELECT * FROM users WHERE username = :username OR email = :email";

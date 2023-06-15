@@ -25,6 +25,36 @@ class API {
         }
     }
 
+    public function handleGet() {
+        try {
+        $response = $this->dataHandler->getProducts();
+
+        switch ($_GET['type']) {
+            case 'products':
+                $response = $this->dataHandler->getProducts();
+                break;
+            case 'productsByKategorie':
+                $response = $this->dataHandler->getProductsByKate($_GET['kategorie']);
+                break;
+            case 'users':
+                $response = $this->dataHandler->getUsers();
+                break;
+            default:
+                $response = null;
+                break;
+        }
+
+
+        if ($response !== null) {
+            $this->respond(200, $response);
+        } else {
+            $this->respond(500, array('status' => 'error', 'message' => 'Error retrieving data'));
+        }
+        } catch (Exception $e) {
+            $this->respond(500, array('status' => 'error', 'message' => $e->getMessage()));
+        }
+    }
+
     public function handlePost() {
         $data = json_decode(file_get_contents("php://input"), true);
         if ($data === null) {
@@ -75,20 +105,6 @@ class API {
             $this->respond(500, array('status' => 'error', 'message' => 'Error processing data'));
         }
     }
-    
-    public function handleGet() {
-        try {
-        $response = $this->dataHandler->getProducts();
-        if ($response !== null) {
-            $this->respond(200, $response);
-        } else {
-            $this->respond(500, array('status' => 'error', 'message' => 'Error retrieving data'));
-        }
-        } catch (Exception $e) {
-            $this->respond(500, array('status' => 'error', 'message' => $e->getMessage()));
-        }
-    }
-    
     
     public function respond($status, $data = null) {
         // Set CORS headers
