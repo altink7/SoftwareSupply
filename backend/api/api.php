@@ -1,12 +1,17 @@
 <?php
 
-include_once '../db/Database.php';
-
+include_once '../data/ProductDAO.php';
+include_once '../data/UserDAO.php';
+include_once '../data/CartDAO.php';
 class API {
-    private $dataHandler;
+    private $productDAO;
+    private $userDAO;
+    private $cartDAO;
     
     public function __construct() {
-        $this->dataHandler = new Database();
+        $this->productDAO = new ProductDAO();
+        $this->userDAO = new UserDAO();
+        $this->cartDAO = new CartDAO();
         $this->processRequest();
     }
     
@@ -27,29 +32,31 @@ class API {
 
     public function handleGet() {
         try {
-        $response = $this->dataHandler->getProducts();
+            $response = null;
 
-        switch ($_GET['type']) {
-            case 'products':
-                $response = $this->dataHandler->getProducts();
-                break;
-            case 'productsByKategorie':
-                $response = $this->dataHandler->getProductsByKate($_GET['kategorie']);
-                break;
-            case 'users':
-                $response = $this->dataHandler->getUsers();
-                break;
-            default:
-                $response = null;
-                break;
-        }
+            $type = isset($_GET['type']) ? $_GET['type'] : '';
 
+            switch ($type) {
+                case 'products':
+                    $response = $this->productDAO->getProducts();
+                    break;
+                case 'productsByCategory':
+                    $kategorie = isset($_GET['kategorie']) ? $_GET['kategorie'] : '';
+                    $response = $this->productDAO->getProductsByCategory($kategorie);
+                    break;
+                case 'users':
+                    $response = $this->userDAO->getUsers();
+                    break;
+                default:
+                    $response = null;
+                    break;
+            }
 
-        if ($response !== null) {
-            $this->respond(200, $response);
-        } else {
-            $this->respond(500, array('status' => 'error', 'message' => 'Error retrieving data'));
-        }
+            if ($response !== null) {
+                $this->respond(200, $response);
+            } else {
+                $this->respond(500, array('status' => 'error', 'message' => 'Error retrieving data'));
+            }
         } catch (Exception $e) {
             $this->respond(500, array('status' => 'error', 'message' => $e->getMessage()));
         }
@@ -71,6 +78,9 @@ class API {
             case 'register':
                 $this->handleRegister($data);
                 break;
+            case 'add_to_cart':
+                $this->handleAddToCart($data);
+                break;
             default:
                 $this->respond(400, "Invalid request type");
                 break;
@@ -82,9 +92,9 @@ class API {
         $password = $data['password'];
     
         // Retrieve the user from the database using the provided username
-        $user = $this->dataHandler->getUserByUsernameOrEmail($username);
+        $user = $this->userDAO->getUserByUsernameOrEmail($username);
     
-        if ($user !== null && $this->dataHandler->verifyPassword($password, $user['password'])) {
+        if ($user !== null && $this->userDAO->verifyPassword($password, $user['password'])) {
             // User found and password matches, create a session
             session_start();
             $_SESSION['username'] = $username;
@@ -97,12 +107,29 @@ class API {
             $this->respond(401, array('status' => 'error', 'message' => 'Invalid username or password'));
         }
     }
+
     public function handleRegister($data) {
-        $response = $this->dataHandler->insertUser($data);
+        $response = $this->userDAO->insertUser($data);
         if ($response !== null) {
             $this->respond(200, array('status' => 'success', 'message' => 'Registration successful'));
         } else {
             $this->respond(500, array('status' => 'error', 'message' => 'Error processing data'));
+        }
+    }
+
+    public function handleAddToCart($data) {
+        $productId = isset($data['product_id']) ? $data['product_id'] : '';
+
+        if (!empty($productId)) {
+            $response = $this->cartDAO->addToCart($productId);
+            if ($response === true) {
+                $cartCount = $this->cartDAO->getCartCount();
+                $this->respond(200, array('status' => 'success', 'message' => 'Product added to cart', 'cart_count' => $cartCount));
+            } else {
+                $this->respond(500, array('status' => 'error', 'message' => 'Failed to add product to cart'));
+            }
+        } else {
+            $this->respond(400, array('status' => 'error', 'message' => 'Invalid product ID'));
         }
     }
     

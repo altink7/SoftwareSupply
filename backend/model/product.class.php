@@ -6,8 +6,6 @@
     private $review;
     private $fkCustomer;
     private $date;
-
-    // Constructor
     public function __construct($id, $title, $description, $price, $review, $fkCustomer, $date) {
         $this->id = $id;
         $this->title = $title;
@@ -18,7 +16,6 @@
         $this->date = $date;
     }
 
-    // Getters
     public function getId() {
         return $this->id;
     }
