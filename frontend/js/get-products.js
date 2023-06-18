@@ -66,6 +66,20 @@ $(document).ready(function() {
               card.append(cardBody);
               card.append(cardFooter);
               cardCol.append(card);
+
+            
+              card.draggable({
+                revert: 'invalid',
+                helper: 'clone',
+                start: function(event, ui) {
+                  ui.helper.css('width', card.width());
+                }
+              });
+
+              cardButton.on('click', function() {
+                var productId = product.id;
+                cart.addToCart(productId);
+              });
   
               if (index % 4 === 0) {
                 var row = $('<div class="row"></div>');

@@ -55,11 +55,12 @@ class ProductDAO {
     }
 
     public function searchProducts($keyword) {
-        $sql = "SELECT * FROM product WHERE title LIKE :keyword OR description LIKE :keyword";
+        $sql = "SELECT * FROM product WHERE title LIKE :title OR description LIKE :description";
         try {
             $stmt = $this->db->conn->prepare($sql);
             $keyword = '%' . $keyword . '%';
-            $stmt->bindValue(':keyword', $keyword);
+            $stmt->bindValue(':title', $keyword);
+            $stmt->bindValue(':description', $keyword);
             $stmt->execute();
             $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
             return $result;
@@ -67,10 +68,6 @@ class ProductDAO {
             return $e->getMessage();
         }
     }
-    
-    
-    
-    
     
 }
 ?>
