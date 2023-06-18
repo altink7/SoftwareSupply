@@ -16,6 +16,7 @@ $(document).ready(function () {
                 if (response.status === 'success') {
                     // Logout successful, redirect to the index page
                     window.location.href = 'index.html';
+                    alert('Logout successful');
                 }
             },
             error: function (xhr, status, error) {

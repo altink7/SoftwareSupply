@@ -121,7 +121,6 @@ class API {
     }
 
     public function handleLogout() {
-        session_start();
         // Clear session data
         $_SESSION = array();
         session_destroy();
