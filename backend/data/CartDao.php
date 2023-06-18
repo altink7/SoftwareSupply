@@ -13,12 +13,29 @@ class CartDAO {
         $userId = 3; // Replace wenn user drinnen ist
 
         try {
-            $sql = "INSERT INTO cart (user_id, product_id, quantity) VALUES (:user_id, :product_id, 1)";
+           // Check if the product is already in the cart for the user
+            $sql = "SELECT quantity FROM cart WHERE user_id = :user_id AND product_id = :product_id";
+            $stmt = $this->db->conn->prepare($sql);
+            $stmt->bindValue(':user_id', $userId, PDO::PARAM_INT);
+            $stmt->bindValue(':product_id', $productId, PDO::PARAM_INT);
+            $stmt->execute();
+            $existingQuantity = $stmt->fetchColumn();
+
+            if ($existingQuantity) {
+                // Product exists in the cart, update the quantity
+                $sql = "UPDATE cart SET quantity = quantity + 1 WHERE user_id = :user_id AND product_id = :product_id";
+            } else {
+                // Product does not exist in the cart, insert a new row
+                $sql = "INSERT INTO cart (user_id, product_id, quantity) VALUES (:user_id, :product_id, 1)";
+            }
+
             $stmt = $this->db->conn->prepare($sql);
             $stmt->bindValue(':user_id', $userId, PDO::PARAM_INT);
             $stmt->bindValue(':product_id', $productId, PDO::PARAM_INT);
             $stmt->execute();
             $stmt->closeCursor();
+
+        
             return true;
         } catch (PDOException $e) {
             return false;

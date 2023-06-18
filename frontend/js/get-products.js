@@ -34,7 +34,7 @@ $(document).ready(function() {
                     var cardTitle = $('<h5 class="card-title">' + product.title + '</h5>');
                     var cardText = $('<p class="card-text">' + product.description + '</p>');
                     var cardFooter = $('<div class="card-footer"></div>');
-                    var priceReview = $('<p class="price-review">Price: $' + product.price + ' | Review: ' + product.review + '</p>');
+                    var priceReview = $('<p class="price-review">Price: €' + product.price + ' | Review: ' + product.review + '</p>');
                     var cardButton = $('<button class="btn btn-primary card-button">Add to Cart</button>');
 
                     cardBody.append(cardTitle);
