@@ -47,6 +47,12 @@ class API {
                 case 'users':
                     $response = $this->userDAO->getUsers();
                     break;
+                case 'cart':
+                    $response = $this->cartDAO->getCartData();
+                    break;
+                case 'cartCount':
+                    $response = $this->cartDAO->getCartCount();
+                    break;
                 default:
                     $response = null;
                     break;
