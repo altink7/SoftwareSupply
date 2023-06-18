@@ -47,6 +47,20 @@ class UserDAO {
         }
     }
 
+    public function getUserProfile($username) {
+        $sql = "SELECT * FROM users WHERE username = :username";
+        try {
+            $stmt = $this->db->conn->prepare($sql);
+            $stmt->bindParam(':username', $username);
+            $stmt->execute();
+            $result = $stmt->fetch(PDO::FETCH_ASSOC);
+            return $result;
+        } catch (PDOException $e) {
+            return null;
+        }
+    }
+
+
     public function getUserByUsernameOrEmail($usernameOrEmail) {
         $sql = "SELECT * FROM users WHERE username = :username OR email = :email";
         try {
@@ -60,6 +74,41 @@ class UserDAO {
             return null;
         }
     }
+
+    public function updateUserProfile($username, $updatedData) {
+        $sql = "UPDATE users 
+                SET first_name = :first_name, last_name = :last_name, email = :email, 
+                    address = :address, postal_code = :postal_code, city = :city, 
+                    password = :password, payment = :payment 
+                WHERE username = :username";
+    
+        try {
+            $stmt = $this->db->conn->prepare($sql);
+            $stmt->bindParam(':first_name', $updatedData['first_name']);
+            $stmt->bindParam(':last_name', $updatedData['last_name']);
+            $stmt->bindParam(':email', $updatedData['email']);
+            $stmt->bindParam(':address', $updatedData['address']);
+            $stmt->bindParam(':postal_code', $updatedData['postal_code']);
+            $stmt->bindParam(':city', $updatedData['city']);
+            $stmt->bindParam(':password', $updatedData['password']);
+            $stmt->bindParam(':payment', $updatedData['payment']);
+            $stmt->bindParam(':username', $username);
+    
+            $result = $stmt->execute();
+    
+            if ($result) {
+                return true;
+            } else {
+                $errorInfo = $stmt->errorInfo();
+                error_log("Error updating user profile: " . $errorInfo[2]);
+                return false;
+            }
+        } catch (PDOException $e) {
+            error_log("PDOException in updateUserProfile: " . $e->getMessage());
+            return false;
+        }
+    }
+    
 
     private function hashPassword($password) {
         return password_hash($password, PASSWORD_DEFAULT);

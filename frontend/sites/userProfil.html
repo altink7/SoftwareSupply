@@ -38,16 +38,22 @@
     </nav>
 
     <div class="container card-deck">
-        <h1 class="mt-4">User Profil</h1>
+        <div class="profile-title">
+            <h1><span id="username"></span></h1>
+        </div>
         <div class="row mt-4">
             <div class="col-md-6">
-                <h2 class="mb-3">Stammdaten</h2>
+                <h3 class="mb-3">Stammdaten</h3>
                 <div class="profile-section">
-                    <p><strong>Name:</strong> Max Mustermann</p>
-                    <p><strong>Email:</strong> max.mustermann@gmail.com</p>
-                    <p><strong>Geburtsdatum:</strong> 01.01.1990</p>
-                    <p><strong>Adresse:</strong> Musterstraße 123, 12345 Musterstadt</p>
-                    <button class="btn btn-primary">Bearbeiten</button>
+                    <p><strong>Vorname:</strong> <span id="first_name"></span> <span id="last_name"></span></p>
+                    <p><strong>Email:</strong> <span id="email"></span></p>
+                    <p><strong>Adresse:</strong> <span id="address"></span></p>
+                    <p><strong>PLZ:</strong> <span id="zip_code"></span></p>
+                    <p><strong>Stadt:</strong> <span id="city"></span></p>
+                    <p><strong>Passwort:</strong> <span id="password"></span></p>
+                    <p><strong>Zahlungsmethode: </strong> <span id="payment"></span></p>
+                    <button id="editButton" class="btn btn-primary">Bearbeiten</button>
+                    <button id="saveButton" class="btn btn-primary" style="display: none;">Speichern</button>
                 </div>
             </div>
             <div class="col-md-6">
@@ -92,6 +98,7 @@
     </footer>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="../js/check-login.js"></script>
+    <script src="../js/get-userData.js"></script>
 
 </body>
 
