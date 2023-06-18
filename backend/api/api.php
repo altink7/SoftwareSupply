@@ -91,6 +91,9 @@ class API {
             case 'add_to_cart':
                 $this->handleAddToCart($data);
                 break;
+            case 'logout':
+                $this->handleLogout();
+                break;
             default:
                 $this->respond(400, "Invalid request type");
                 break;
@@ -116,6 +119,16 @@ class API {
             $this->respond(401, array('status' => 'error', 'message' => 'Invalid username or password'));
         }
     }
+
+    public function handleLogout() {
+        session_start();
+        // Clear session data
+        $_SESSION = array();
+        session_destroy();
+
+        $this->respond(200, array('status' => 'success', 'message' => 'Logout successful'));
+    }
+    
 
     public function handleRegister($data) {
         $response = $this->userDAO->insertUser($data);

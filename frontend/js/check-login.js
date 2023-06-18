@@ -2,6 +2,28 @@ $(document).ready(function () {
     // Check if the user is already logged in and update the navbar accordingly
     checkLoginStatus();
 
+    // Add event listener to the Logout link
+    $('#logout-link').click(function (event) {
+        event.preventDefault();
+
+        // Send AJAX request to logout
+        $.ajax({
+            type: 'POST',
+            url: 'http://localhost/SoftwareSupply/backend/api/api.php',
+            data: JSON.stringify({ request_type: 'logout' }),
+            contentType: 'application/json',
+            success: function (response) {
+                if (response.status === 'success') {
+                    // Logout successful, redirect to the index page
+                    window.location.href = 'index.html';
+                }
+            },
+            error: function (xhr, status, error) {
+                alert('Error logging out. Please try again.');
+            }
+        });
+    });
+
     $('form').submit(function (event) {
         event.preventDefault();
 
@@ -21,8 +43,7 @@ $(document).ready(function () {
             contentType: 'application/json',
             success: function (response) {
                 if (response.status === 'success') {
-                    // Login successful, update the navbar and redirect to the profile page
-                    updateNavbar(true);
+                    // Login successful, redirect to the profile page
                     window.location.href = 'userProfil.html';
                 }
             },
@@ -37,11 +58,14 @@ $(document).ready(function () {
         $.ajax({
             type: 'GET',
             url: 'http://localhost/SoftwareSupply/backend/api/api.php?type=login_status',
+            dataType: 'json',
             success: function (response) {
                 if (response.logged_in === true) {
-                    updateNavbar(true);
+                    $('#login-link').text('Profil');
+                    $('#login-link').attr('href', 'userProfil.html');
                 } else {
-                    updateNavbar(false);
+                    $('#login-link').text('Login');
+                    $('#login-link').attr('href', 'login.html');
                 }
             },
             error: function (xhr, status, error) {
@@ -50,19 +74,4 @@ $(document).ready(function () {
         });
     }
 
-    // Function to update the navbar based on the login status
-    function updateNavbar(loggedIn) {
-        var profileLink = $('#profile-link');
-        var loginLink = $('#login-link');
-
-        if (loggedIn) {
-            profileLink.text('Profil');
-            loginLink.hide();
-            profileLink.show();
-        } else {
-            profileLink.text('Login');
-            profileLink.hide();
-            loginLink.show();
-        }
-    }
 });

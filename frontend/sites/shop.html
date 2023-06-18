@@ -29,15 +29,15 @@
       <div class="collapse navbar-collapse justify-content-evenly text-center" id="navbarSupportedContent">
         <a class="nav-link" href="shop.html">Shop</a>
         <a class="nav-link" href="about.html">Über Uns</a>
-        <a class="nav-link" href="login.html">Login</a>
+        <a class="nav-link" id="login-link" href="login.html">Login</a>
         <a href="warenkorb.html" class="btn btn-primary shopping-cart-button">
           <i class="fas fa-shopping-cart"></i>
           <span class="cart-count"></span>
-        </a>        
+        </a>
       </div>
     </div>
   </nav>
-  
+
   <div class="container card-deck shop">
     <h1 class="shopTitle">Produkte</h1>
     <select class="form-select category-dropdown" aria-label="Default select example">
@@ -64,6 +64,8 @@
 
   <script src="../js/get-products.js"></script>
   <script src="../js/cart.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script src="../js/check-login.js"></script>
 </body>
 
 </html>
