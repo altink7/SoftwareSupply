@@ -3,6 +3,7 @@
 include_once '../data/ProductDAO.php';
 include_once '../data/UserDAO.php';
 include_once '../data/CartDAO.php';
+
 class API {
     private $productDAO;
     private $userDAO;
@@ -98,6 +99,9 @@ class API {
             case 'update_profile': 
                 $this->handleUpdateProfile($data);
                 break;
+            case 'removeProduct':
+                $this->handleRemoveProduct($data);
+                break;
             default:
                 $this->respond(400, "Invalid request type");
                 break;
@@ -117,11 +121,11 @@ class API {
             $_SESSION['username'] = $username;
             $_SESSION['loggedin'] = true;
 
-             // Set session cookie lifetime
-        if ($rememberMe) {
-        $cookieLifetime = 604800; // 1 week in seconds
-        session_set_cookie_params($cookieLifetime);
-      }
+            // Set session cookie lifetime
+            if ($rememberMe) {
+                $cookieLifetime = 604800; // 1 week in seconds
+                session_set_cookie_params($cookieLifetime);
+            }
     
             // Return success response
             $this->respond(200, array('status' => 'success', 'message' => 'Login successful'));
@@ -138,7 +142,6 @@ class API {
 
         $this->respond(200, array('status' => 'success', 'message' => 'Logout successful'));
     }
-    
 
     public function handleRegister($data) {
         $response = $this->userDAO->insertUser($data);
@@ -170,7 +173,6 @@ class API {
             $this->respond(500, array('status' => 'error', 'message' => 'Failed to update profile'));
         }
     }
-    
 
     public function handleAddToCart($data) {
         $productId = isset($data['product_id']) ? $data['product_id'] : '';
@@ -182,6 +184,23 @@ class API {
                 $this->respond(200, array('status' => 'success', 'message' => 'Product added to cart', 'cart_count' => $cartCount));
             } else {
                 $this->respond(500, array('status' => 'error', 'message' => 'Failed to add product to cart'));
+            }
+        } else {
+            $this->respond(400, array('status' => 'error', 'message' => 'Invalid product ID'));
+        }
+    }
+
+    public function handleRemoveProduct($data) {
+        $productId = isset($data['product_id']) ? $data['product_id'] : '';
+        $userId = 3; // update with real user ID
+
+        if (!empty($productId)) {
+            $response = $this->cartDAO->removeProduct($userId, $productId);
+            if ($response === true) {
+                $cartCount = $this->cartDAO->getCartCount();
+                $this->respond(200, array('status' => 'success', 'message' => 'Product removed from cart', 'cart_count' => $cartCount));
+            } else {
+                $this->respond(500, array('status' => 'error', 'message' => 'Failed to remove product from cart'));
             }
         } else {
             $this->respond(400, array('status' => 'error', 'message' => 'Invalid product ID'));
@@ -200,7 +219,6 @@ class API {
         return array('logged_in' => $loggedIn, 'user_profile' => $userProfile);
     }
 
-    
     public function respond($status, $data = null) {
         // Set CORS headers
         header("Access-Control-Allow-Origin: *"); // Allow requests from any origin
