@@ -95,6 +95,9 @@ class API {
             case 'logout':
                 $this->handleLogout();
                 break;
+            case 'update_profile': 
+                $this->handleUpdateProfile($data);
+                break;
             default:
                 $this->respond(400, "Invalid request type");
                 break;
@@ -145,6 +148,29 @@ class API {
             $this->respond(500, array('status' => 'error', 'message' => 'Error processing data'));
         }
     }
+
+    public function handleUpdateProfile($data) {
+        $username = $_SESSION['username'];
+        $updatedData = [
+            'first_name' => $data['first_name'],
+            'last_name' => $data['last_name'],
+            'email' => $data['email'],
+            'address' => $data['address'],
+            'postal_code' => $data['postal_code'],
+            'city' => $data['city'],
+            'password' => $data['password'],
+            'payment' => $data['payment']
+        ];
+
+        $result = $this->userDAO->updateUserProfile($username, $updatedData);
+
+        if ($result) {
+            $this->respond(200, array('status' => 'success', 'message' => 'Profile updated successfully'));
+        } else {
+            $this->respond(500, array('status' => 'error', 'message' => 'Failed to update profile'));
+        }
+    }
+    
 
     public function handleAddToCart($data) {
         $productId = isset($data['product_id']) ? $data['product_id'] : '';

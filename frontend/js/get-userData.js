@@ -1,5 +1,4 @@
 $(document).ready(function () {
-
     // Function to fetch and display user profile data
     function fetchUserProfile() {
         $.ajax({
@@ -19,7 +18,6 @@ $(document).ready(function () {
                     var password = userProfile.password;
                     var payment = userProfile.payment;
 
-
                     // Update the profile section with the user data
                     $('#username').text(name);
                     $('#first_name').text(first_name);
@@ -37,6 +35,66 @@ $(document).ready(function () {
             }
         });
     }
+
+    // Function to enable editing of user data
+    function enableEdit() {
+        $('.profile-section span').attr('contenteditable', 'true');
+        $('#editButton').hide();
+        $('#saveButton').show();
+    }
+
+    // Function to save the updated user data
+    function saveData() {
+        var updatedData = {
+            first_name: $('#first_name').text(),
+            last_name: $('#last_name').text(),
+            email: $('#email').text(),
+            address: $('#address').text(),
+            postal_code: $('#zip_code').text(),
+            city: $('#city').text(),
+            password: $('#password').text(),
+            payment: $('#payment').text()
+        };
+
+        // Make an AJAX request to save the updated data to the database
+        $.ajax({
+            type: 'POST',
+            url: 'http://localhost/SoftwareSupply/backend/api/api.php',
+            data: JSON.stringify({
+                request_type: 'update_profile',
+                ...updatedData
+            }),
+            contentType: 'application/json',
+            success: function (response) {
+                // Handle the response after successfully saving the data
+                if (response.status === 'success') {
+                    console.log('Data saved successfully!');
+                    // You can provide a success message or perform any additional actions here
+                } else {
+                    console.log('Error saving data');
+                    // Handle the error if the data could not be saved
+                }
+            },
+            error: function (xhr, status, error) {
+                console.log('Error saving data');
+                // Handle the error if the data could not be saved
+            }
+        });
+
+        // Disable editing and switch back to the edit button
+        disableEdit();
+    }
+
+    // Function to disable editing of user data
+    function disableEdit() {
+        $('.profile-section span').attr('contenteditable', 'false');
+        $('#saveButton').hide();
+        $('#editButton').show();
+    }
+
+    // Attach click event handlers to the edit and save buttons
+    $('#editButton').click(enableEdit);
+    $('#saveButton').click(saveData);
 
     // Call fetchUserProfile function on document ready
     fetchUserProfile();
