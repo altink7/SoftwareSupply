@@ -3,18 +3,19 @@
 include_once '../data/ProductDAO.php';
 include_once '../data/UserDAO.php';
 include_once '../data/CartDAO.php';
+
 class API {
     private $productDAO;
     private $userDAO;
     private $cartDAO;
-    
+
     public function __construct() {
         $this->productDAO = new ProductDAO();
         $this->userDAO = new UserDAO();
         $this->cartDAO = new CartDAO();
         $this->processRequest();
     }
-    
+
     public function processRequest() {
         $request_method = $_SERVER["REQUEST_METHOD"];
         switch ($request_method) {
@@ -47,11 +48,8 @@ class API {
                 case 'users':
                     $response = $this->userDAO->getUsers();
                     break;
-                case 'cart':
-                    $response = $this->cartDAO->getCartData();
-                    break;
-                case 'cartCount':
-                    $response = $this->cartDAO->getCartCount();
+                case 'login_status':
+                    $response = $this->checkLoginStatus();
                     break;
                 default:
                     $response = null;
@@ -74,9 +72,9 @@ class API {
             $this->respond(400, "Invalid JSON data");
             return;
         }
-    
+
         $request_type = isset($data['request_type']) ? $data['request_type'] : '';
-    
+
         switch ($request_type) {
             case 'login':
                 $this->handleLogin($data);
@@ -92,20 +90,20 @@ class API {
                 break;
         }
     }
-    
+
     public function handleLogin($data) {
         $username = $data['username'];
         $password = $data['password'];
-    
+
         // Retrieve the user from the database using the provided username
         $user = $this->userDAO->getUserByUsernameOrEmail($username);
-    
+
         if ($user !== null && $this->userDAO->verifyPassword($password, $user['password'])) {
             // User found and password matches, create a session
             session_start();
             $_SESSION['username'] = $username;
             $_SESSION['loggedin'] = true;
-    
+
             // Return success response
             $this->respond(200, array('status' => 'success', 'message' => 'Login successful'));
         } else {
@@ -138,16 +136,22 @@ class API {
             $this->respond(400, array('status' => 'error', 'message' => 'Invalid product ID'));
         }
     }
-    
+
+    public function checkLoginStatus() {
+        session_start();
+        $loggedIn = isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true;
+        return array('logged_in' => $loggedIn);
+    }
+
     public function respond($status, $data = null) {
         // Set CORS headers
         header("Access-Control-Allow-Origin: *"); // Allow requests from any origin
         header("Access-Control-Allow-Methods: GET, POST"); // Allow GET and POST methods
         header("Access-Control-Allow-Headers: Content-Type"); // Allow the Content-Type header
-        
+
         http_response_code($status);
         header("Content-Type: application/json;charset=utf-8");
-        
+
         if ($data !== null) {
             echo json_encode($data);
         }
