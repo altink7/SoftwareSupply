@@ -73,6 +73,20 @@ class UserDAO {
         }
     }
 
+    //find id by username
+    public function getUserIdByUsername($username) {
+        $sql = "SELECT id FROM users WHERE username = :username";
+        try {
+            $stmt = $this->db->conn->prepare($sql);
+            $stmt->bindParam(':username', $username);
+            $stmt->execute();
+            $result = $stmt->fetch(PDO::FETCH_ASSOC);
+            return $result['id'];
+        } catch (PDOException $e) {
+            return null;
+        }
+    }
+
     public function updateUserProfile($username, $updatedData) {
         $sql = "UPDATE users 
                 SET first_name = :first_name, last_name = :last_name, email = :email, 
