@@ -34,6 +34,7 @@ $(document).ready(function () {
         var data = {
             username: username,
             password: password,
+            remember_me: $('#remember-checkbox').is(':checked'),
             request_type: 'login'
         };
 

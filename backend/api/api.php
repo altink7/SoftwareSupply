@@ -16,6 +16,7 @@ class API {
     }
     
     public function processRequest() {
+        session_set_cookie_params(3600); // Set the cookie lifetime to 1 hour (3600 seconds)
         session_start();
         $request_method = $_SERVER["REQUEST_METHOD"];
         switch ($request_method) {
@@ -103,6 +104,7 @@ class API {
     public function handleLogin($data) {
         $username = $data['username'];
         $password = $data['password'];
+        $rememberMe = isset($data['remember_me']) && $data['remember_me'] === true;
     
         // Retrieve the user from the database using the provided username
         $user = $this->userDAO->getUserByUsernameOrEmail($username);
@@ -111,6 +113,12 @@ class API {
             // User found and password matches, create a session
             $_SESSION['username'] = $username;
             $_SESSION['loggedin'] = true;
+
+             // Set session cookie lifetime
+        if ($rememberMe) {
+        $cookieLifetime = 604800; // 1 week in seconds
+        session_set_cookie_params($cookieLifetime);
+      }
     
             // Return success response
             $this->respond(200, array('status' => 'success', 'message' => 'Login successful'));
