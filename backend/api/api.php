@@ -164,8 +164,16 @@ class API {
 
     public function checkLoginStatus() {
         $loggedIn = $_SESSION['loggedin'] === true;
-        return array('logged_in' => $loggedIn);
+        $userProfile = null;
+    
+        if ($loggedIn) {
+            $username = $_SESSION['username'];
+            $userProfile = $this->userDAO->getUserProfile($username);
+        }
+    
+        return array('logged_in' => $loggedIn, 'user_profile' => $userProfile);
     }
+
     
     public function respond($status, $data = null) {
         // Set CORS headers

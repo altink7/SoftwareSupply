@@ -47,6 +47,20 @@ class UserDAO {
         }
     }
 
+    public function getUserProfile($username) {
+        $sql = "SELECT * FROM users WHERE username = :username";
+        try {
+            $stmt = $this->db->conn->prepare($sql);
+            $stmt->bindParam(':username', $username);
+            $stmt->execute();
+            $result = $stmt->fetch(PDO::FETCH_ASSOC);
+            return $result;
+        } catch (PDOException $e) {
+            return null;
+        }
+    }
+
+
     public function getUserByUsernameOrEmail($usernameOrEmail) {
         $sql = "SELECT * FROM users WHERE username = :username OR email = :email";
         try {
