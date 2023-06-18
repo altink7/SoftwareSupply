@@ -36,9 +36,9 @@ class API {
     public function handleGet() {
         try {
             $response = null;
-
+    
             $type = isset($_GET['type']) ? $_GET['type'] : '';
-
+    
             switch ($type) {
                 case 'products':
                     $response = $this->productDAO->getProducts();
@@ -46,6 +46,10 @@ class API {
                 case 'productsByCategory':
                     $kategorie = isset($_GET['kategorie']) ? $_GET['kategorie'] : '';
                     $response = $this->productDAO->getProductsByCategory($kategorie);
+                    break;
+                case 'productsBySearch':
+                    $keyword = isset($_GET['search']) ? $_GET['search'] : '';
+                    $response = $this->productDAO->searchProducts($keyword);
                     break;
                 case 'users':
                     $response = $this->userDAO->getUsers();
@@ -63,7 +67,7 @@ class API {
                     $response = null;
                     break;
             }
-
+    
             if ($response !== null) {
                 $this->respond(200, $response);
             } else {
@@ -73,6 +77,7 @@ class API {
             $this->respond(500, array('status' => 'error', 'message' => $e->getMessage()));
         }
     }
+    
 
     public function handlePost() {
         $data = json_decode(file_get_contents("php://input"), true);

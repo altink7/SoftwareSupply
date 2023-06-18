@@ -53,6 +53,24 @@ class ProductDAO {
             return null;
         }
     }
-}
 
+    public function searchProducts($keyword) {
+        $sql = "SELECT * FROM product WHERE title LIKE :keyword OR description LIKE :keyword";
+        try {
+            $stmt = $this->db->conn->prepare($sql);
+            $keyword = '%' . $keyword . '%';
+            $stmt->bindValue(':keyword', $keyword);
+            $stmt->execute();
+            $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            return $result;
+        } catch (PDOException $e) {
+            return $e->getMessage();
+        }
+    }
+    
+    
+    
+    
+    
+}
 ?>
