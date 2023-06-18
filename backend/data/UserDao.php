@@ -1,7 +1,6 @@
 <?php
 include_once 'db/Database.php';
 
-
 class UserDAO {
     private $db;
 
@@ -60,7 +59,6 @@ class UserDAO {
         }
     }
 
-
     public function getUserByUsernameOrEmail($usernameOrEmail) {
         $sql = "SELECT * FROM users WHERE username = :username OR email = :email";
         try {
@@ -81,7 +79,7 @@ class UserDAO {
                     address = :address, postal_code = :postal_code, city = :city, 
                     password = :password, payment = :payment 
                 WHERE username = :username";
-    
+
         try {
             $stmt = $this->db->conn->prepare($sql);
             $stmt->bindParam(':first_name', $updatedData['first_name']);
@@ -90,12 +88,15 @@ class UserDAO {
             $stmt->bindParam(':address', $updatedData['address']);
             $stmt->bindParam(':postal_code', $updatedData['postal_code']);
             $stmt->bindParam(':city', $updatedData['city']);
-            $stmt->bindParam(':password', $updatedData['password']);
+
+            $hashedPassword = $this->hashPassword($updatedData['password']);
+            $stmt->bindParam(':password', $hashedPassword);
+
             $stmt->bindParam(':payment', $updatedData['payment']);
             $stmt->bindParam(':username', $username);
-    
+
             $result = $stmt->execute();
-    
+
             if ($result) {
                 return true;
             } else {
@@ -108,7 +109,6 @@ class UserDAO {
             return false;
         }
     }
-    
 
     private function hashPassword($password) {
         return password_hash($password, PASSWORD_DEFAULT);

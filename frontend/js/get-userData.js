@@ -15,7 +15,7 @@ $(document).ready(function () {
                     var address = userProfile.address;
                     var postal_code = userProfile.postal_code;
                     var city = userProfile.city;
-                    var password = userProfile.password;
+                    var password = '********';
                     var payment = userProfile.payment;
 
                     // Update the profile section with the user data
@@ -26,7 +26,7 @@ $(document).ready(function () {
                     $('#address').text(address);
                     $('#zip_code').text(postal_code);
                     $('#city').text(city);
-                    $('#password').text(password);
+                    $('#password').text(password); // Display asterisks instead of the actual password
                     $('#payment').text(payment);
                 }
             },
@@ -56,10 +56,22 @@ $(document).ready(function () {
             payment: $('#payment').text()
         };
 
+        // Validate the updated password
+        if (updatedData.password.length < 8) {
+            alert('Das Passwort muss mindestens 8 Zeichen lang sein.');
+            return;
+        }
+
+        var confirmPassword = prompt('Bitte bestätigen Sie das neue Passwort:');
+        if (updatedData.password !== confirmPassword) {
+            alert('Die Passwörter stimmen nicht überein.');
+            return;
+        }
+
         // Make an AJAX request to save the updated data to the database
         $.ajax({
             type: 'POST',
-            url: 'http://localhost/SoftwareSupply/backend/api/api.php',
+            url: 'http://localhost/SoftwareSupply/backend/api/api.php?type=update_profile',
             data: JSON.stringify({
                 request_type: 'update_profile',
                 ...updatedData
