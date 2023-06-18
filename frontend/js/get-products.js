@@ -25,31 +25,40 @@ $(document).ready(function() {
                     var productList = $('#productList');
                     productList.empty(); // Clear existing products before appending new ones
 
-                    response.forEach(function(product) {
-                        var card = $('<div class="card"></div>');
-                        var cardInner = $('<div class="card-inner"></div>');
-                        var cardBody = $('<div class="card-body"></div>');
-                        var cardTitle = $('<h2 class="card-title"></h2>');
-                        var cardText = $('<p></p>');
-                        var cardFooter = $('<div class="card-footer"></div>');
-                        var cardButton = $('<button class="btn btn-primary">Add to cart</button>');
+                response.forEach(function(product, index) {
+                    var imagePath = 'http://localhost/SoftwareSupply/backend/productpictures/' + product.image_url + '.png';
+                    var cardCol = $('<div class="col-md-3 d-flex"></div>'); 
+                    var card = $('<div class="card mb-4"></div>');
+                    var cardImage = $('<img class="card-img-top small-icon" src="' +imagePath + '" alt="software">'); 
+                    var cardBody = $('<div class="card-body"></div>');
+                    var cardTitle = $('<h5 class="card-title">' + product.title + '</h5>');
+                    var cardText = $('<p class="card-text">' + product.description + '</p>');
+                    var cardFooter = $('<div class="card-footer"></div>');
+                    var priceReview = $('<p class="price-review">Price: $' + product.price + ' | Review: ' + product.review + '</p>');
+                    var cardButton = $('<button class="btn btn-primary card-button">Add to Cart</button>');
 
-                        cardTitle.text(product.title);
-                        cardText.text(product.description);
-                        cardFooter.text('Price: $' + product.price+' |  Review:'+ product.review);
-                        cardBody.append(cardTitle);
-                        cardBody.append(cardText);
-                        cardBody.append(cardButton);
-                        cardInner.append(cardBody);
-                        cardInner.append(cardFooter);
-                        card.append(cardInner);
-                        productList.append(card);
+                    cardBody.append(cardTitle);
+                    cardBody.append(cardText);
+                    cardFooter.append(priceReview);
+                    cardFooter.append(cardButton);
+                    card.append(cardImage);
+                    card.append(cardBody);
+                    card.append(cardFooter);
+                    cardCol.append(card);
 
-                        cardButton.on('click', function() {
-                            var productId = product.id;
-                            cart.addToCart(productId);
-                        });
+                    if (index % 4 === 0) {
+                        var row = $('<div class="row"></div>'); // Create a new row for every fourth card
+                        $('#productList').append(row);
+                    }
+                
+                    $('#productList .row:last-child').append(cardCol); // Append the card to the last row
+
+                    cardButton.on('click', function() {
+                        var productId = product.id;
+                        cart.addToCart(productId);
                     });
+                });
+
                 } else {
                     console.error('Error: No data found.');
                 }

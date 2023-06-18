@@ -10,8 +10,8 @@ class ProductDAO {
     }
 
     public function insertProduct($data) {
-        $sql = "INSERT INTO product (id, title, description, price, review, fk_customer) 
-                VALUES (:id, :title, :description, :price, :review, :fk_customer)";
+        $sql = "INSERT INTO product (id, title, description, price, review, fk_customer, image_url) 
+                VALUES (:id, :title, :description, :price, :review, :fk_customer, :image_url)";
 
         try {
             $stmt = $this->db->conn->prepare($sql);
@@ -21,6 +21,7 @@ class ProductDAO {
             $stmt->bindParam(':price', $data['price']);
             $stmt->bindParam(':review', $data['review']);
             $stmt->bindParam(':fk_customer', $data['fk_customer']);
+            $stmt->bindParam(':image_url', $data['image_url']);
             $stmt->execute();
             return $this->db->conn->lastInsertId();
         } catch (PDOException $e) {
