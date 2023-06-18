@@ -19,6 +19,7 @@ $(document).ready(function() {
     $.ajax({
         type: 'GET',
         dataType: 'json',
+        contentType: 'application/json',
         url: 'http://localhost/SoftwareSupply/backend/api/api.php?type=cart',
         success: function(response) {
             if (response.status === 'success') {
