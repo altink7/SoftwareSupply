@@ -1,4 +1,6 @@
 $(document).ready(function () {
+    var isPasswordModified = false; // Flag to track if the password field is modified
+
     // Function to fetch and display user profile data
     function fetchUserProfile() {
         $.ajax({
@@ -28,6 +30,10 @@ $(document).ready(function () {
                     $('#city').text(city);
                     $('#password').text(password); // Display asterisks instead of the actual password
                     $('#payment').text(payment);
+
+                    $('#password').on('input', function () {
+                        isPasswordModified = true; // Set the flag when the password field is modified
+                    });
                 }
             },
             error: function (xhr, status, error) {
@@ -56,16 +62,19 @@ $(document).ready(function () {
             payment: $('#payment').text()
         };
 
-        // Validate the updated password
-        if (updatedData.password.length < 8) {
-            alert('Das Passwort muss mindestens 8 Zeichen lang sein.');
-            return;
-        }
+        // Check if the password field is modified
+        if (isPasswordModified) {
+            // Validate the updated password
+            if (updatedData.password.length < 8) {
+                alert('Das Passwort muss mindestens 8 Zeichen lang sein.');
+                return;
+            }
 
-        var confirmPassword = prompt('Bitte bestätigen Sie das neue Passwort:');
-        if (updatedData.password !== confirmPassword) {
-            alert('Die Passwörter stimmen nicht überein.');
-            return;
+            var confirmPassword = prompt('Bitte bestätigen Sie das neue Passwort:');
+            if (updatedData.password !== confirmPassword) {
+                alert('Die Passwörter stimmen nicht überein.');
+                return;
+            }
         }
 
         // Make an AJAX request to save the updated data to the database
