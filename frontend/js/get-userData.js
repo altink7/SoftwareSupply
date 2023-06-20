@@ -29,7 +29,7 @@ $(document).ready(function () {
                     $('#zip_code').text(postal_code);
                     $('#city').text(city);
                     $('#password').text(password); // Display asterisks instead of the actual password
-                    $('#payment').text(payment);
+                    $('#payment').val(payment);
 
                     $('#password').on('input', function () {
                         isPasswordModified = true; // Set the flag when the password field is modified
@@ -47,8 +47,8 @@ $(document).ready(function () {
         $('.profile-section span').attr('contenteditable', 'true');
         $('#editButton').hide();
         $('#saveButton').show();
+        $('#payment').prop('disabled', false);
     }
-
     // Function to save the updated user data
     function saveData() {
         var updatedData = {
@@ -58,7 +58,7 @@ $(document).ready(function () {
             address: $('#address').text(),
             postal_code: $('#zip_code').text(),
             city: $('#city').text(),
-            payment: $('#payment').text()
+            payment: $('#payment').val()
         };
 
         // Check if the password field is modified
@@ -112,6 +112,7 @@ $(document).ready(function () {
         $('.profile-section span').attr('contenteditable', 'false');
         $('#saveButton').hide();
         $('#editButton').show();
+        $('#payment').prop('disabled', true);
     }
 
     // Attach click event handlers to the edit and save buttons

@@ -29,6 +29,11 @@
 
 }
 
+.profile-section select {
+    width: auto;
+    flex: 1;
+}
+
 .transparent-button:hover {
     color: #000;
     background-color: white;
