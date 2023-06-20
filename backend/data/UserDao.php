@@ -90,10 +90,17 @@ class UserDAO {
     public function updateUserProfile($username, $updatedData) {
         $sql = "UPDATE users 
                 SET first_name = :first_name, last_name = :last_name, email = :email, 
-                    address = :address, postal_code = :postal_code, city = :city, 
-                    password = :password, payment = :payment 
-                WHERE username = :username";
-
+                    address = :address, postal_code = :postal_code, city = :city";
+    
+        // Check if the password is modified
+        if (!empty($updatedData['password'])) {
+            $sql .= ", password = :password";
+            $hashedPassword = $this->hashPassword($updatedData['password']);
+        }
+    
+        $sql .= ", payment = :payment 
+                  WHERE username = :username";
+    
         try {
             $stmt = $this->db->conn->prepare($sql);
             $stmt->bindParam(':first_name', $updatedData['first_name']);
@@ -102,15 +109,17 @@ class UserDAO {
             $stmt->bindParam(':address', $updatedData['address']);
             $stmt->bindParam(':postal_code', $updatedData['postal_code']);
             $stmt->bindParam(':city', $updatedData['city']);
-
-            $hashedPassword = $this->hashPassword($updatedData['password']);
-            $stmt->bindParam(':password', $hashedPassword);
-
+    
+            // Bind hashed password if modified
+            if (!empty($hashedPassword)) {
+                $stmt->bindParam(':password', $hashedPassword);
+            }
+    
             $stmt->bindParam(':payment', $updatedData['payment']);
             $stmt->bindParam(':username', $username);
-
+    
             $result = $stmt->execute();
-
+    
             if ($result) {
                 return true;
             } else {
@@ -123,6 +132,7 @@ class UserDAO {
             return false;
         }
     }
+    
 
     private function hashPassword($password) {
         return password_hash($password, PASSWORD_DEFAULT);

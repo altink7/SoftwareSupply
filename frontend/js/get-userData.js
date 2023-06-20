@@ -58,23 +58,24 @@ $(document).ready(function () {
             address: $('#address').text(),
             postal_code: $('#zip_code').text(),
             city: $('#city').text(),
-            password: $('#password').text(),
             payment: $('#payment').text()
         };
 
         // Check if the password field is modified
         if (isPasswordModified) {
             // Validate the updated password
-            if (updatedData.password.length < 8) {
+            var newPassword = $('#password').text();
+            if (newPassword.length < 8) {
                 alert('Das Passwort muss mindestens 8 Zeichen lang sein.');
                 return;
             }
 
             var confirmPassword = prompt('Bitte bestätigen Sie das neue Passwort:');
-            if (updatedData.password !== confirmPassword) {
+            if (newPassword !== confirmPassword) {
                 alert('Die Passwörter stimmen nicht überein.');
                 return;
             }
+            updatedData.password = newPassword;
         }
 
         // Make an AJAX request to save the updated data to the database
