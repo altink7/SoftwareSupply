@@ -47,10 +47,10 @@
         <div class="card registerForm login-card">
             <div class="card-body">
                 <div id="success-message" class="alert alert-success text-center d-none">
-                    <h1>Success</h1>
-                    <p>User has been saved successfully.</p>
+                    <h1>Erfolgreich</h1>
+                    <p>User wurde erfolgreich angelegt.</p>
                 </div>
-                <h2 class="card-title text-center">Register</h2>
+                <h2 class="card-title text-center">Registrieren</h2>
                 <form>
                     <div class="row mb-2">
                         <div class="col-md-2">
@@ -63,48 +63,47 @@
                         </div>
                         <div class="col-md-5">
                             <label for="vorname">Vorname</label>
-                            <input type="text" class="form-control" id="vorname" placeholder="Enter Vorname">
+                            <input type="text" class="form-control" id="vorname" placeholder="Max">
                         </div>
                         <div class="col-md-5">
                             <label for="nachname">Nachname</label>
-                            <input type="text" class="form-control" id="nachname" placeholder="Enter Nachname">
+                            <input type="text" class="form-control" id="nachname" placeholder="Mustermann">
                         </div>
                     </div>
                     <div class="mb-2">
                         <label for="adresse">Adresse</label>
-                        <input type="text" class="form-control" id="adresse" placeholder="Enter Adresse">
+                        <input type="text" class="form-control" id="adresse" placeholder="Musterstraße">
                     </div>
                     <div class="row mb-3">
                         <div class="col-md-3">
                             <label for="plz">PLZ</label>
-                            <input type="number" class="form-control" id="plz" name="plz" placeholder="Enter PLZ"
+                            <input type="number" class="form-control" id="plz" name="plz" placeholder="1210"
                                 pattern="\d{4}" required>
                         </div>
                         <div class="col-md-9">
                             <label for="ort">Ort</label>
-                            <input type="text" class="form-control" id="ort" placeholder="Enter Ort">
+                            <input type="text" class="form-control" id="ort" placeholder="Musterstadt">
                         </div>
                     </div>
                     <div class="mb-2">
-                        <label for="email">Email</label>
-                        <input type="email" class="form-control" id="email" placeholder="Enter email">
+                        <label for="email">E-Mail-Adresse</label>
+                        <input type="email" class="form-control" id="email" placeholder="max.muster@gmail.com">
                     </div>
                     <div class="mb-2">
                         <label for="username">Username</label>
-                        <input type="text" class="form-control" id="username" placeholder="Enter username">
+                        <input type="text" class="form-control" id="username" placeholder="Maxxx">
                     </div>
                     <div class="mb-2">
-                        <label for="password">Password</label>
-                        <input type="password" class="form-control" id="password" placeholder="Enter password"
-                            minlength="8">
+                        <label for="password">Passwort</label>
+                        <input type="password" class="form-control" id="password" placeholder="********" minlength="8">
                     </div>
                     <div class="mb-2">
-                        <label for="confirm-password">Confirm Password</label>
-                        <input type="password" class="form-control" id="confirm-password" placeholder="Confirm password"
+                        <label for="confirm-password">Passwort bestätigen</label>
+                        <input type="password" class="form-control" id="confirm-password" placeholder="********"
                             minlength="8">
                     </div>
-                    <div class="col-md-2">
-                        <label for="payment">Payment</label>
+                    <div>
+                        <label for="payment">Zahlungsmethode</label>
                         <select class="form-control" id="payment" name="salutation">
                             <option value="none">-</option>
                             <option value="PayPal">PayPal</option>
@@ -114,7 +113,7 @@
                     </div>
                     <br>
                     <div class="mb-2">
-                        <button type="submit" class="btn btn-primary card-button">Register</button>
+                        <button type="submit" class="btn btn-primary card-button">Registrieren</button>
                         <button type="button" class="btn btn-primary card-button"
                             onclick="location.href='login.html'">Login</button>
                     </div>
