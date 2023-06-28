@@ -9,9 +9,7 @@ class CartDAO {
         $this->db = new Database();
     }
 
-    public function addToCart($productId) {
-        $userId = 3; // Replace wenn user drinnen ist
-
+    public function addToCart($productId, $userId) {
         try {
            // Check if the product is already in the cart for the user
             $sql = "SELECT quantity FROM cart WHERE user_id = :user_id AND product_id = :product_id";
@@ -42,9 +40,7 @@ class CartDAO {
         }
     }
 
-    public function getCartCount() {
-        $userId = 3; // Replace wenn user drinnen ist
-
+    public function getCartCount($userId) {
         try {
             $sql = "SELECT COUNT(*) FROM cart WHERE user_id = :user_id";
             $stmt = $this->db->conn->prepare($sql);
@@ -59,9 +55,7 @@ class CartDAO {
         }
     }
 
-    public function getCartData() {
-        $userId = 3; // Replace wenn user drinnen ist
-    
+    public function getCartData($userId) {
         try {
             $sql = "SELECT p.title, p.price, p.id, c.quantity FROM cart c
                     INNER JOIN product p ON c.product_id = p.id
@@ -98,6 +92,15 @@ class CartDAO {
     
         return $total;
     }
-    
+
+    public function updateQuantity($username, $productId, $quantity) {
+        $query = "UPDATE cart SET quantity = :quantity WHERE user_id = :username AND product_id = :product_id";
+        $stmt = $this->db->conn->prepare($query);
+        $stmt->bindParam(':quantity', $quantity);
+        $stmt->bindParam(':username', $username);
+        $stmt->bindParam(':product_id', $productId);
+        return $stmt->execute();
+    }
+
+
 }
-?>

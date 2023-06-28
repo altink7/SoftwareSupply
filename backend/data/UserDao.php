@@ -142,5 +142,3 @@ class UserDAO {
         return password_verify($password, $hashedPassword);
     }
 }
-
-?>
