@@ -19,10 +19,7 @@ class CartDAO {
             $stmt->execute();
             $existingQuantity = $stmt->fetchColumn();
 
-            if ($existingQuantity) {
-                // Product exists in the cart, update the quantity
-                $sql = "UPDATE cart SET quantity = quantity + 1 WHERE user_id = :user_id AND product_id = :product_id";
-            } else {
+            if (!$existingQuantity) {
                 // Product does not exist in the cart, insert a new row
                 $sql = "INSERT INTO cart (user_id, product_id, quantity) VALUES (:user_id, :product_id, 1)";
             }
