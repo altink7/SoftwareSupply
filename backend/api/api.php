@@ -36,7 +36,7 @@ class API {
     public function handleGet() {
         try {
             $type = isset($_GET['type']) ? $_GET['type'] : '';
-            $username = isset($_GET['username']) ? $_GET['username'] : '3';
+            $username = isset($_SESSION['username']) ? $_SESSION['username'] : '';
     
             switch ($type) {
                 case 'products':
@@ -54,10 +54,10 @@ class API {
                     $response = $this->userDAO->getUsers();
                     break;
                 case 'cart':
-                    $response = $this->cartDAO->getCartData($username);
+                    $response = $this->cartDAO->getCartData($this->userDAO->getUserIdByUsername($username));
                     break;
                 case 'cartCount':
-                    $response = $this->cartDAO->getCartCount($username);
+                    $response = $this->cartDAO->getCartCount($this->userDAO->getUserIdByUsername($username));
                     break;
                 case 'login_status':
                     $response = $this->checkLoginStatus();
@@ -183,12 +183,12 @@ class API {
 
     public function handleAddToCart($data) {
         $productId = isset($data['product_id']) ? $data['product_id'] : '';
-        $username = isset($_SESSION['username']) ? $_SESSION['username'] : '3';
+        $username = isset($_SESSION['username']) ? $_SESSION['username'] : '';
 
         if (!empty($productId)) {
-            $response = $this->cartDAO->addToCart($productId, $username);
+            $response = $this->cartDAO->addToCart($productId, $this->userDAO->getUserIdByUsername($username));
             if ($response === true) {
-                $cartCount = $this->cartDAO->getCartCount($username);
+                $cartCount = $this->cartDAO->getCartCount($this->userDAO->getUserIdByUsername($username));
                 $this->respond(200, array('status' => 'success', 'message' => 'Product added to cart', 'cart_count' => $cartCount));
             } else {
                 $this->respond(500, array('status' => 'error', 'message' => 'Failed to add product to cart'));
@@ -200,12 +200,12 @@ class API {
 
     public function handleRemoveProduct($data) {
         $productId = isset($data['product_id']) ? $data['product_id'] : '';
-        $username = isset($_SESSION['username']) ? $_SESSION['username'] : '3';
+        $username = isset($_SESSION['username']) ? $_SESSION['username'] : '';
 
         if (!empty($productId)) {
-            $response = $this->cartDAO->removeProduct($username, $productId);
+            $response = $this->cartDAO->removeProduct($this->userDAO->getUserIdByUsername($username), $productId);
             if ($response === true) {
-                $cartCount = $this->cartDAO->getCartCount($username);
+                $cartCount = $this->cartDAO->getCartCount($this->userDAO->getUserIdByUsername($username));
                 $this->respond(200, array('status' => 'success', 'message' => 'Product removed from cart', 'cart_count' => $cartCount));
             } else {
                 $this->respond(500, array('status' => 'error', 'message' => 'Failed to remove product from cart'));
@@ -218,10 +218,10 @@ class API {
     public function handleUpdateQuantity($data) {
         $productId = isset($data['product_id']) ? $data['product_id'] : '';
         $quantity = isset($data['quantity']) ? intval($data['quantity']) : 0;
-        $username = isset($_SESSION['username']) ? $_SESSION['username'] : '3';
+        $username = isset($_SESSION['username']) ? $_SESSION['username'] : '';
 
         if (!empty($productId) && $quantity > 0) {
-            $response = $this->cartDAO->updateQuantity($username, $productId, $quantity);
+            $response = $this->cartDAO->updateQuantity($this->userDAO->getUserIdByUsername($username), $productId, $quantity);
             if ($response === true) {
                 $this->respond(200, array('status' => 'success', 'message' => 'Quantity updated successfully'));
             } else {

@@ -75,6 +75,8 @@ class UserDAO {
 
     //find id by username
     public function getUserIdByUsername($username) {
+        if (empty($username)) return 3;
+
         $sql = "SELECT id FROM users WHERE username = :username";
         try {
             $stmt = $this->db->conn->prepare($sql);
@@ -83,7 +85,7 @@ class UserDAO {
             $result = $stmt->fetch(PDO::FETCH_ASSOC);
             return $result['id'];
         } catch (PDOException $e) {
-            return null;
+            return 3;
         }
     }
 
