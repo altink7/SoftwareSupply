@@ -94,7 +94,7 @@ $(document).ready(function() {
     function removeProduct(productId) {
       var data = {
         product_id: productId,
-        request_type: 'removeProduct'
+        request_type: 'remove_product'
       };
 
       $.ajax({
