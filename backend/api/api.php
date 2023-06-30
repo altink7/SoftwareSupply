@@ -255,9 +255,10 @@ class API {
     }
 
     public function handleSaveOrder($data) {
-        $username = $_SESSION['username'];
+        $username = isset($_SESSION['username']) ? $_SESSION['username'] : '';
+        $totalPrice = isset($data['total_price']) ? $data['total_price'] : 0;
         $userId = $this->userDAO->getUserIdByUsername($username);
-        $orderId = $this->orderDAO->saveOrder($data, $userId);
+        $orderId = $this->orderDAO->saveOrder($totalPrice, $userId);
 
         if ($orderId !== null) {
             $this->respond(200, array('status' => 'success', 'order_id' => $orderId));

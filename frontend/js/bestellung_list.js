@@ -57,6 +57,7 @@ $(document).ready(function() {
             type: 'POST',
             url: 'http://localhost/SoftwareSupply/backend/api/api.php',
             data: {
+                total_price: cartTotal,
                 request_type: 'save_order'
             },
             success: function(response) {
