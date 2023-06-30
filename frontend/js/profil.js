@@ -23,14 +23,15 @@ $(document).ready(function() {
                             url: 'http://localhost/SoftwareSupply/backend/api/api.php?type=get_invoice&order_id=' + order.id,
                             method: 'GET',
                             success: function(response) {
-                                // Weiterleitung zur generierten PDF-Datei
-                                window.location.href = response.pdf_url;
+                                console.log(response);
+                                window.open("http://localhost/SoftwareSupply/backend/api/" + response, "_blank");
                             },
                             error: function(xhr, status, error) {
                                 alert('In Arbeit, wird gefixt bald, in Backend ist der Fehler');
                                 console.error(error);
                             }
                         });
+
                     });
 
                     var invoiceCell = $('<td>').append(invoiceButton);
