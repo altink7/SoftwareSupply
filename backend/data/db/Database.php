@@ -25,4 +25,12 @@ class Database {
     public function disconnect() {
         $this->conn = null;
     }
+
+    public function lastInsertId(){
+        return $this->conn->lastInsertId();
+    }
+
+    public function prepare($query){
+        return $this->conn->prepare($query);
+    }
 }

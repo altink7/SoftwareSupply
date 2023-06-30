@@ -3,16 +3,19 @@
 include_once '../data/ProductDAO.php';
 include_once '../data/UserDAO.php';
 include_once '../data/CartDAO.php';
+include_once '../data/OrderDAO.php';
 
 class API {
     private $productDAO;
     private $userDAO;
     private $cartDAO;
+    private $orderDAO;
     
     public function __construct() {
         $this->productDAO = new ProductDAO();
         $this->userDAO = new UserDAO();
         $this->cartDAO = new CartDAO();
+        $this->orderDAO = new OrderDAO();
         $this->processRequest();
     }
     
@@ -108,6 +111,12 @@ class API {
                 break;
             case 'remove_product':
                 $this->handleRemoveProduct($data);
+                break;
+            case 'save_order':
+                $this->handleSaveOrder($data);
+                break;
+            case 'save_order_positions':
+                $this->handleSaveOrderPositions($data);
                 break;
             default:
                 $this->respond(400, "Invalid request type");
@@ -244,6 +253,51 @@ class API {
     
         return array('logged_in' => $loggedIn, 'user_profile' => $userProfile);
     }
+
+    public function handleSaveOrder($data) {
+        $username = $_SESSION['username'];
+        $userId = $this->userDAO->getUserIdByUsername($username);
+        $orderId = $this->orderDAO->saveOrder($data, $userId);
+
+        if ($orderId !== null) {
+            $this->respond(200, array('status' => 'success', 'order_id' => $orderId));
+        } else {
+            $this->respond(500, array('status' => 'error', 'message' => 'Error saving order'));
+        }
+    }
+
+    public function handleSaveOrderPositions($data) {
+        $orderId = isset($data['order_id']) ? $data['order_id'] : '';
+        $positions = isset($data['positions']) ? $data['positions'] : [];
+
+        if (!empty($orderId) && !empty($positions)) {
+            $success = true;
+            foreach ($positions as $position) {
+                $productId = isset($position['product_id']) ? $position['product_id'] : '';
+                $quantity = isset($position['quantity']) ? $position['quantity'] : 0;
+
+                if (!empty($productId) && is_numeric($quantity)) {
+                    $result = $this->orderDAO->saveOrderPosition($orderId, $productId, $quantity);
+                    if (!$result) {
+                        $success = false;
+                        break;
+                    }
+                } else {
+                    $success = false;
+                    break;
+                }
+            }
+
+            if ($success) {
+                $this->respond(200, array('status' => 'success', 'message' => 'Order positions saved successfully'));
+            } else {
+                $this->respond(500, array('status' => 'error', 'message' => 'Error saving order positions'));
+            }
+        } else {
+            $this->respond(400, array('status' => 'error', 'message' => 'Invalid request data'));
+        }
+    }
+
 
     public function respond($status, $data = null) {
         // Set CORS headers
