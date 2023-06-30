@@ -274,7 +274,8 @@ class API {
         if (!empty($orderId) && !empty($positions)) {
             $success = true;
             foreach ($positions as $position) {
-                $productId = isset($position['product_id']) ? $position['product_id'] : '';
+                $title = isset($position['title']) ? $position['title'] : '';
+                $productId = $this->productDAO->getProductIdByTitle($title);
                 $quantity = isset($position['quantity']) ? $position['quantity'] : 0;
 
                 if (!empty($productId) && is_numeric($quantity)) {

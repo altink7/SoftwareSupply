@@ -68,5 +68,18 @@ class ProductDAO {
             return $e->getMessage();
         }
     }
+
+    public function getProductIdByTitle($title){
+        $sql = "SELECT id FROM product WHERE title = :title";
+        try {
+            $stmt = $this->db->conn->prepare($sql);
+            $stmt->bindParam(':title', $title);
+            $stmt->execute();
+            $result = $stmt->fetch(PDO::FETCH_ASSOC);
+            return $result['id'];
+        } catch (PDOException $e) {
+            return null;
+        }
+    }
     
 }
