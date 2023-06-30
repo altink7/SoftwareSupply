@@ -12,9 +12,9 @@ var cart = {
         success: function(response) {
           if (response.status === 'success') {
             cart.updateCartCount(response.cart_count);
-            alert('Product added to cart successfully!');
+            alert('Produkt erfolgreich zum Warenkorb hinzugefügt!');
           } else {
-            alert('Failed to add product to cart. Please try again.');
+            alert('Fehler beim Hinzufügen des Produkts zum Warenkorb. Bitte versuchen Sie es erneut.');
           }
         },
         error: function(xhr, status, error) {

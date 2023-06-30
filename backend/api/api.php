@@ -30,6 +30,9 @@ class API {
             case 'GET':
                 $this->handleGet();
                 break;
+            case 'DELETE':
+                $this->handleDelete();
+                break;
             default:
                 $this->respond(500, "Invalid Request");
                 break;
@@ -64,6 +67,9 @@ class API {
                     break;
                 case 'login_status':
                     $response = $this->checkLoginStatus();
+                    break;
+                case 'get_orders_for_user':
+                    $response = $this->orderDAO->getOrdersForUser($this->userDAO->getUserIdByUsername($username));
                     break;
                 default:
                     $response = null;
@@ -123,7 +129,34 @@ class API {
                 break;
         }
     }
-    
+
+    public function handleDelete() {
+        try {
+            $type = isset($_GET['type']) ? $_GET['type'] : '';
+            $username = isset($_SESSION['username']) ? $_SESSION['username'] : '';
+
+            switch ($type) {
+                case 'cart':
+                    $response = $this->cartDAO->deleteCartData($this->userDAO->getUserIdByUsername($username));
+                    break;
+                default:
+                    $response = null;
+                    break;
+            }
+
+            if ($response === true) {
+                $this->respond(200, array('status' => 'success', 'message' => 'Data deleted successfully'));
+            } else {
+                $this->respond(500, array('status' => 'error', 'message' => 'Failed to delete data'));
+            }
+        } catch (Exception $e) {
+            $this->respond(500, array('status' => 'error', 'message' => $e->getMessage()));
+        }
+    }
+
+
+
+
     public function handleLogin($data) {
         $username = $data['username'];
         $password = $data['password'];

@@ -56,4 +56,13 @@ class OrderDAO {
         return $productPrice * $quantity;
     }
 
+    public function getOrdersForUser($userId){
+        $query = "SELECT * FROM `order` WHERE user_fk = :user_fk";
+        $stmt = $this->db->prepare($query);
+        $stmt->bindParam(':user_fk', $userId);
+        $stmt->execute();
+        $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $result;
+    }
+
 }

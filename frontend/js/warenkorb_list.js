@@ -125,23 +125,55 @@ $(document).ready(function() {
       });
     }
 
-    // AJAX call to retrieve cart data
-    $.ajax({
-      type: 'GET',
-      url: 'http://localhost/SoftwareSupply/backend/api/api.php?type=cart',
-      success: function(response) {
-        if (response) {
-          response.forEach(function(item) {
-            addRowToCartTable(item);
-          });
-        }
-      },
-      error: function(xhr, status, error) {
-        console.error('AJAX Error: ' + error);
+// AJAX call to retrieve cart data
+  $.ajax({
+    type: 'GET',
+    url: 'http://localhost/SoftwareSupply/backend/api/api.php?type=cart',
+    success: function(response) {
+      if (response.length > 0) {
+        // User is logged in and there are products in the cart
+        $('.card-button').on('click', function(event) {
+          if (response.length === 0) {
+            event.preventDefault();
+            alert('Es befinden sich keine Produkte im Warenkorb.');
+          } else {
+            // User is not logged in, prevent clicking on the "Zur Kasse gehen" button and display error message
+              var loginText = $('#login-link').text();
+              if (loginText !== 'Login') {
+                window.location.href = 'bestellung.html';
+              }
+          }
+        });
+      } else {
+        // No products in the cart, display error message
+        $('.card-button').on('click', function(event) {
+          event.preventDefault();
+          alert('Es befinden sich keine Produkte im Warenkorb.');
+        });
       }
-    });
 
-    function calculateTotalPrice() {
+      // User is not logged in, prevent clicking on the "Zur Kasse gehen" button and display error message
+      $('.card-button').on('click', function(event) {
+        event.preventDefault();
+        var loginText = $('#login-link').text();
+        if (loginText === 'Login') {
+          alert('Bitte melden Sie sich an, um zur Kasse zu gehen.');
+        }
+      });
+
+      response.forEach(function(item) {
+        addRowToCartTable(item);
+      });
+    },
+    error: function(xhr, status, error) {
+      console.error('AJAX Error: ' + error);
+    }
+  });
+
+
+
+
+  function calculateTotalPrice() {
       var totalPrice = 0;
 
       $('#cart-table tbody tr').each(function() {

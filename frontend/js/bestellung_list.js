@@ -82,6 +82,7 @@ $(document).ready(function() {
         });
     }
 
+
     function saveOrderPositions(orderId, positions) {
         var orderPositions = [];
 
@@ -109,6 +110,12 @@ $(document).ready(function() {
             success: function(response) {
                 if (response.status === 'success') {
                     console.log('Order positions saved successfully.');
+
+                    // Show success message in a dialog
+                    showDialog('Bestellung erfolgreich aufgegeben.');
+
+                    // Delete all items from the cart
+                    deleteCartItems();
                 } else {
                     console.error('Error saving order positions.');
                 }
@@ -120,6 +127,32 @@ $(document).ready(function() {
         });
     }
 
+    function showDialog(message) {
+        // Show the message in a dialog or alert
+        alert(message);
+    }
+
+    function deleteCartItems() {
+        $.ajax({
+            type: 'DELETE',
+            url: 'http://localhost/SoftwareSupply/backend/api/api.php?type=cart',
+            success: function(response) {
+                console.log('Cart items deleted successfully.');
+                // Clear the cart table
+                cartTable.empty();
+                // Update the total
+                cartTotal = 0;
+                $('#cart-total-sum').text('0.00 €');
+
+                //redirect to userProfil
+                window.location.href = "http://localhost/SoftwareSupply/frontend/sites/userProfil.html";
+            },
+            error: function(xhr, status, error) {
+                console.error('AJAX Error: ' + error);
+                console.log(xhr.responseText);
+            }
+        });
+    }
 
     $('.card-button').click(function() {
         saveOrder();

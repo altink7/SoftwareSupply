@@ -99,5 +99,14 @@ class CartDAO {
         return $stmt->execute();
     }
 
+    public function deleteCartData($userId) {
+        $sql = "DELETE FROM cart WHERE user_id = :user_id";
+        $stmt = $this->db->conn->prepare($sql);
+        $stmt->bindValue(':user_id', $userId, PDO::PARAM_INT);
+        $stmt->execute();
+        $stmt->closeCursor();
+        return true;
+    }
+
 
 }
