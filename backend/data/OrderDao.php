@@ -2,9 +2,11 @@
 
 class OrderDAO {
     private $db;
+    private $invoiceDao;
 
     public function __construct(){
         $this->db = new Database();
+        $this->invoiceDao = new InvoiceDao();
     }
 
     public function saveOrder($totalPrice, $userId){
@@ -16,6 +18,7 @@ class OrderDAO {
 
         if ($stmt->execute()) {
             $orderId = $this->db->lastInsertId();
+            $this->invoiceDao->saveInvoice($userId, $orderId);
             return $orderId;
         } else {
             return false;

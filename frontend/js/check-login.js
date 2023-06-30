@@ -72,6 +72,7 @@ $(document).ready(function () {
             },
             error: function (xhr, status, error) {
                 console.log('Error checking login status');
+                console.log(xhr)
             }
         });
     }

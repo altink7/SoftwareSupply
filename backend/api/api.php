@@ -4,18 +4,22 @@ include_once '../data/ProductDAO.php';
 include_once '../data/UserDAO.php';
 include_once '../data/CartDAO.php';
 include_once '../data/OrderDAO.php';
+include_once '../data/InvoiceDao.php';
+include_once '../service/InvoiceService.php';
 
 class API {
     private $productDAO;
     private $userDAO;
     private $cartDAO;
     private $orderDAO;
+    private $invoiceService;
     
     public function __construct() {
         $this->productDAO = new ProductDAO();
         $this->userDAO = new UserDAO();
         $this->cartDAO = new CartDAO();
         $this->orderDAO = new OrderDAO();
+        $this->invoiceService = new InvoiceService();
         $this->processRequest();
     }
     
@@ -43,7 +47,7 @@ class API {
         try {
             $type = isset($_GET['type']) ? $_GET['type'] : '';
             $username = isset($_SESSION['username']) ? $_SESSION['username'] : '';
-    
+
             switch ($type) {
                 case 'products':
                     $response = $this->productDAO->getProducts();
@@ -71,11 +75,16 @@ class API {
                 case 'get_orders_for_user':
                     $response = $this->orderDAO->getOrdersForUser($this->userDAO->getUserIdByUsername($username));
                     break;
+                case 'get_invoice':
+                    // Call the createInvoicePdf function to generate the invoice and save it as a PDF file
+                    $order_id = isset($_GET['order_id']) ? $_GET['order_id'] : '';
+                    $response = $this->invoiceService->createInvoicePdf($this->userDAO->getUserIdByUsername($username), $order_id);
+                    break;
                 default:
                     $response = null;
                     break;
             }
-    
+
             if ($response !== null) {
                 $this->respond(200, $response);
             } else {

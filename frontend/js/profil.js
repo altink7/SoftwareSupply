@@ -15,6 +15,27 @@ $(document).ready(function() {
                     row.append($('<td>').text(order.created));
                     row.append($('<td>').text(order.updated));
                     row.append($('<td>').text(order.total + ' €'));
+
+                    var invoiceButton = $('<button>').text('Rechnung').addClass('btn btn-primary');
+                    invoiceButton.click(function() {
+                        //AJAX GET-Request an den PHP-Endpunkt
+                        $.ajax({
+                            url: 'http://localhost/SoftwareSupply/backend/api/api.php?type=get_invoice&order_id=' + order.id,
+                            method: 'GET',
+                            success: function(response) {
+                                // Weiterleitung zur generierten PDF-Datei
+                                window.location.href = response.pdf_url;
+                            },
+                            error: function(xhr, status, error) {
+                                alert('In Arbeit, wird gefixt bald, in Backend ist der Fehler');
+                                console.error(error);
+                            }
+                        });
+                    });
+
+                    var invoiceCell = $('<td>').append(invoiceButton);
+                    row.append(invoiceCell);
+
                     tableBody.append(row);
                 });
             } else {
