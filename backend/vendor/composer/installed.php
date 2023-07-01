@@ -3,7 +3,7 @@
         'name' => 'vendor/softwaresupply',
         'pretty_version' => 'dev-main',
         'version' => 'dev-main',
-        'reference' => '3a24fd6ca6e3c36e192efe039c00ee9928dbd5b6',
+        'reference' => 'fea14dd4f9f1763c94b22fbd9b5d7952afebebe9',
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -33,7 +33,7 @@
         'vendor/softwaresupply' => array(
             'pretty_version' => 'dev-main',
             'version' => 'dev-main',
-            'reference' => '3a24fd6ca6e3c36e192efe039c00ee9928dbd5b6',
+            'reference' => 'fea14dd4f9f1763c94b22fbd9b5d7952afebebe9',
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
