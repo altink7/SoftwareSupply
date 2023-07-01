@@ -1,4 +1,4 @@
-$(document).ready(function() {
+$(document).ready(function () {
     var cartTable = $('#cart-table').find('tbody');
     var cartData = []; // Store cart data globally
 
@@ -23,15 +23,15 @@ $(document).ready(function() {
     $.ajax({
         type: 'GET',
         url: 'http://localhost/SoftwareSupply/backend/api/api.php?type=cart',
-        success: function(response) {
+        success: function (response) {
             if (response) {
                 cartData = response; // Store cart data globally
-                response.forEach(function(item) {
+                response.forEach(function (item) {
                     addRowToCartTable(item);
                 });
             }
         },
-        error: function(xhr, status, error) {
+        error: function (xhr, status, error) {
             console.error('AJAX Error: ' + error);
         }
     });
@@ -39,7 +39,7 @@ $(document).ready(function() {
     function calculateTotalPrice() {
         var totalPrice = 0;
 
-        $('#cart-table tbody tr').each(function() {
+        $('#cart-table tbody tr').each(function () {
             var totalText = $(this).find('td:eq(3)').text().trim();
             var totalValue = parseFloat(totalText);
 
@@ -52,6 +52,12 @@ $(document).ready(function() {
     }
 
     function saveOrder() {
+        var paymentMethod = $('#payment-method').val();
+
+        if (paymentMethod === 'none') {
+            alert('Please select a payment method.');
+            return;
+        }
         // AJAX call to save the order
         $.ajax({
             type: 'POST',
@@ -60,12 +66,12 @@ $(document).ready(function() {
                 total_price: cartTotal,
                 request_type: 'save_order'
             }),
-            success: function(response) {
+            success: function (response) {
                 if (response.status === 'success') {
                     var orderId = response.order_id;
                     // Get the cart positions
                     var positions = [];
-                    $('#cart-table tbody tr').each(function() {
+                    $('#cart-table tbody tr').each(function () {
                         var quantity = parseInt($(this).find('td:eq(2)').text());
                         positions.push({ quantity: quantity });
                     });
@@ -75,7 +81,7 @@ $(document).ready(function() {
                     console.error('Error saving order.');
                 }
             },
-            error: function(xhr, status, error) {
+            error: function (xhr, status, error) {
                 console.error('AJAX Error: ' + error);
                 console.log(xhr.responseText);
             }
@@ -86,7 +92,7 @@ $(document).ready(function() {
     function saveOrderPositions(orderId, positions) {
         var orderPositions = [];
 
-        positions.forEach(function(position, index) {
+        positions.forEach(function (position, index) {
             var quantity = position.quantity;
             var title = cartData[index].title;
 
@@ -107,7 +113,7 @@ $(document).ready(function() {
                 order_id: orderId,
                 positions: orderPositions
             }),
-            success: function(response) {
+            success: function (response) {
                 if (response.status === 'success') {
                     console.log('Order positions saved successfully.');
 
@@ -120,7 +126,7 @@ $(document).ready(function() {
                     console.error('Error saving order positions.');
                 }
             },
-            error: function(xhr, status, error) {
+            error: function (xhr, status, error) {
                 console.error('AJAX Error: ' + error);
                 console.log(xhr.responseText);
             }
@@ -136,7 +142,7 @@ $(document).ready(function() {
         $.ajax({
             type: 'DELETE',
             url: 'http://localhost/SoftwareSupply/backend/api/api.php?type=cart',
-            success: function(response) {
+            success: function (response) {
                 console.log('Cart items deleted successfully.');
                 // Clear the cart table
                 cartTable.empty();
@@ -147,14 +153,14 @@ $(document).ready(function() {
                 //redirect to userProfil
                 window.location.href = "http://localhost/SoftwareSupply/frontend/sites/userProfil.html";
             },
-            error: function(xhr, status, error) {
+            error: function (xhr, status, error) {
                 console.error('AJAX Error: ' + error);
                 console.log(xhr.responseText);
             }
         });
     }
 
-    $('.card-button').click(function() {
+    $('.card-button').click(function () {
         saveOrder();
     });
 });

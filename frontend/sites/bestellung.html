@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
-          integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
+        integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
     <link rel="stylesheet" href="../res/css/stylesheet.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 
@@ -14,66 +14,67 @@
 </head>
 
 <body>
-<nav class="navbar navbar-expand-lg bg-light">
-    <div class="container-fluid">
-        <a class="navbar-brand" href="index.html"> <img src="../res/img/favicon.png" width="80" height="80"></a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+    <nav class="navbar navbar-expand-lg bg-light">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="index.html"> <img src="../res/img/favicon.png" width="80" height="80"></a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                 data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
                 aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse justify-content-evenly text-center" id="navbarSupportedContent">
-            <a class="nav-link" href="shop.html">Shop</a>
-            <a class="nav-link" href="about.html">Über Uns</a>
-            <a class="nav-link" id="login-link" href="login.html">Login</a>
-            <a href="warenkorb.html" class="btn btn-primary shopping-cart-button">
-                <i class="fas fa-shopping-cart"></i>
-            </a>
-        </div>
-    </div>
-</nav>
-
-<div class="container warenkorb">
-    <h1 class="text-center">Ihre Bestellung</h1>
-    <div class="row">
-        <!-- Zahlungsmethode auswählen -->
-        <div class="col-md-4 pb-4">
-            <div class="card">
-                <div class="card-body">
-                    <h5 class="card-title">Zahlungsmethode</h5>
-                    <select class="form-select">
-                        <option selected>Bitte auswählen</option>
-                        <option value="1">Kreditkarte</option>
-                        <option value="2">PayPal</option>
-                        <option value="3">Banküberweisung</option>
-                    </select>
-                </div>
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse justify-content-evenly text-center" id="navbarSupportedContent">
+                <a class="nav-link" href="shop.html">Shop</a>
+                <a class="nav-link" href="about.html">Über Uns</a>
+                <a class="nav-link" id="login-link" href="login.html">Login</a>
+                <a href="warenkorb.html" class="btn btn-primary shopping-cart-button">
+                    <i class="fas fa-shopping-cart"></i>
+                </a>
             </div>
         </div>
+    </nav>
 
-        <!-- GutscheinCode einlösen -->
-        <div class="col-md-4 pb-4">
-            <div class="card">
-                <div class="card-body">
-                    <h5 class="card-title">Gutschein einlösen</h5>
-                    <input type="text" class="form-control" placeholder="Gutscheincode">
+    <div class="container warenkorb">
+        <h1 class="text-center">Ihre Bestellung</h1>
+        <div class="row">
+            <!-- Zahlungsmethode auswählen -->
+            <div class="col-md-4 pb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Zahlungsmethode</h5>
+                        <select class="form-select" id="payment-method">
+                            <option value="none">-</option>
+                            <option value="PayPal">PayPal</option>
+                            <option value="Credit card">Credit Card</option>
+                            <option value="Klarna">Klarna</option>
+                        </select>
+
+                    </div>
                 </div>
             </div>
-        </div>
+
+            <!-- GutscheinCode einlösen -->
+            <div class="col-md-4 pb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Gutschein einlösen</h5>
+                        <input type="text" class="form-control" placeholder="Gutscheincode">
+                    </div>
+                </div>
+            </div>
 
             <div class="col-md-8">
                 <table class="table" id="cart-table">
                     <thead>
-                    <tr>
-                        <th>Produkt</th>
-                        <th>Preis</th>
-                        <th>Anzahl</th>
-                        <th>Gesamt</th>
-                        <th></th>
-                    </tr>
+                        <tr>
+                            <th>Produkt</th>
+                            <th>Preis</th>
+                            <th>Anzahl</th>
+                            <th>Gesamt</th>
+                            <th></th>
+                        </tr>
                     </thead>
                     <tbody>
-                    <!-- Ueber JavaScript wird die Liste erzeugt-->
+                        <!-- Ueber JavaScript wird die Liste erzeugt-->
                     </tbody>
                 </table>
             </div>
@@ -91,27 +92,27 @@
             </div>
         </div>
     </div>
-</div>
+    </div>
 
-<footer>
-    <ul>
-        <li> <a href="impressum.html">Impressum</a> </li>
-        <li> <a href="faq.html">FAQ</a> </li>
-        <li> <a href="kontakt.html">Kontakt</a> </li>
-        <li> <a href="datenschutz.html">Datenschutz</a> </li>
-        <p></p>
-        <p>Copyright &copy SoftwareSupply GmbH</p>
-        <li> <a href="index.html"> <img src="../res/img/favicon.png" width="80" height="80"></a> </li>
-    </ul>
-</footer>
+    <footer>
+        <ul>
+            <li> <a href="impressum.html">Impressum</a> </li>
+            <li> <a href="faq.html">FAQ</a> </li>
+            <li> <a href="kontakt.html">Kontakt</a> </li>
+            <li> <a href="datenschutz.html">Datenschutz</a> </li>
+            <p></p>
+            <p>Copyright &copy SoftwareSupply GmbH</p>
+            <li> <a href="index.html"> <img src="../res/img/favicon.png" width="80" height="80"></a> </li>
+        </ul>
+    </footer>
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe"
         crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-<script src="../js/check-login.js"></script>
-<script src="../js/bestellung_list.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="../js/check-login.js"></script>
+    <script src="../js/bestellung_list.js"></script>
 
 </body>
 
