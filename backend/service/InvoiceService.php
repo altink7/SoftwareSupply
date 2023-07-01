@@ -38,7 +38,12 @@ class InvoiceService {
 
         if($invoiceData['voucher'] > 0) { // soll nur dann kommen wenn es einen Rabatt gibt
             $pdf->SetFont('Helvetica', 'I', 12);
-            $pdf->Cell(125, 10, 'Rabatt', 1, 0, 'R');
+            $pdf->Cell(125, 10, 'Gesamtbetrag', 1, 0, 'R');
+            $pdf->Cell(40, 10, $invoiceData['total']. ' EUR', 1, 1, 'L');
+
+            $pdf->SetFont('Helvetica', 'I', 12);
+            //wirdso berechnet rabatt/ gesamt * 100 = rabatt in %
+            $pdf->Cell(125, 10, 'Rabatt ('.($invoiceData['voucher'] /$invoiceData['total'] * 100).'%)', 1, 0, 'R');
             $pdf->Cell(40, 10, "- " . $invoiceData['voucher'] . ' EUR', 1, 1, 'L');
         }
 
