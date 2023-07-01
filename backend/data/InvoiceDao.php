@@ -17,7 +17,8 @@ class InvoiceDao {
 
     // mit inner joins holen wir uns alle relevanten daten aus den tabellen invoice, order, order_position, product und user
     public function getInvoiceData($userId, $orderId) {
-        $sql = "SELECT i.id, i.order_fk, i.created_at, p.title, p.price, op.quantity, op.total_position_price, u.address, u.postal_code, u.city, o.total, u.first_name, u.last_name
+        $sql = "SELECT i.id, i.order_fk, i.created_at, p.title, p.price, op.quantity, op.total_position_price,
+                        u.address, u.postal_code, u.city, o.total, o.voucher, u.first_name, u.last_name
         FROM invoice i
         INNER JOIN `order` o ON i.order_fk = o.id
         INNER JOIN order_position op ON o.id = op.order_fk
@@ -38,6 +39,7 @@ class InvoiceDao {
             'postal_code' => $result[0]['postal_code'],
             'city' => $result[0]['city'],
             'total' => $result[0]['total'],
+            'voucher' => $result[0]['voucher'],
             'first_name' => $result[0]['first_name'],
             'last_name' => $result[0]['last_name'],
             'items' => array()
