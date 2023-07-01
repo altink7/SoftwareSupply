@@ -178,28 +178,38 @@ class API {
             // User found and password matches, create a session
             $_SESSION['username'] = $username;
             $_SESSION['loggedin'] = true;
-
-            // Set session cookie lifetime
-            if ($rememberMe) {
-                $cookieLifetime = 604800; // 1 week in seconds
-                session_set_cookie_params($cookieLifetime);
-            }
     
-            // Return success response
-            $this->respond(200, array('status' => 'success', 'message' => 'Login successful'));
-        } else {
-            // User not found or password does not match, return error response
-            $this->respond(401, array('status' => 'error', 'message' => 'Invalid username or password'));
+            // Generate a unique token or session ID
+            $rememberToken = generateUniqueToken(); // Implement this function to generate a unique token
+    
+            if ($rememberMe) {
+                // Store the remember token in the user's record in the database
+            $this->userDAO->updateRememberToken($username, $rememberToken);
+
+            // Set the remember token as a cookie
+            setcookie('remember_token', $rememberToken, time() + (86400 * 30), '/'); // Expires in 30 days
         }
+         
+
+        return $this->respond(200, array('status' => 'success', 'message' => 'Login successful'));
+    } else {
+        return $this->respond(401, array('status' => 'error', 'message' => 'Invalid username or password'));
     }
+}
 
     public function handleLogout() {
         // Clear session data
         $_SESSION = array();
         session_destroy();
-
+    
+        // Delete the remember token cookie
+        if (isset($_COOKIE['remember_token'])) {
+            setcookie('remember_token', '', time() - 3600, '/');
+        }
+    
         $this->respond(200, array('status' => 'success', 'message' => 'Logout successful'));
     }
+    
 
     public function handleRegister($data) {
         $response = $this->userDAO->insertUser($data);
@@ -285,16 +295,29 @@ class API {
 
 
     public function checkLoginStatus() {
-        $loggedIn = $_SESSION['loggedin'] === true;
+        $loggedIn = false;
         $userProfile = null;
     
-        if ($loggedIn) {
-            $username = $_SESSION['username'];
-            $userProfile = $this->userDAO->getUserProfile($username);
+        if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true) {
+            $loggedIn = true;
+            $userProfile = $this->userDAO->getUserProfile($_SESSION['username']);
+        } elseif (isset($_COOKIE['remember_token'])) {
+            $rememberToken = $_COOKIE['remember_token'];
+            $user = $this->userDAO->getUserByRememberToken($rememberToken);
+    
+            if ($user !== null) {
+                $loggedIn = true;
+                $userProfile = $this->userDAO->getUserProfile($user['username']);
+    
+                // Set the session variables
+                $_SESSION['loggedin'] = true;
+                $_SESSION['username'] = $user['username'];
+            }
         }
     
         return array('logged_in' => $loggedIn, 'user_profile' => $userProfile);
     }
+    
 
     public function handleSaveOrder($data) {
         $username = isset($_SESSION['username']) ? $_SESSION['username'] : '';
