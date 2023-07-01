@@ -1,6 +1,26 @@
 $(document).ready(function () {
     var cartTable = $('#cart-table').find('tbody');
     var cartData = []; // Store cart data globally
+    var discountApplied = false;
+
+
+    $('#apply-gift-code').click(function () {
+        if (!discountApplied) { // Check if the discount has not been applied yet
+            var cartTotal = calculateTotalPrice();
+            var newTotal = cartTotal;
+
+            // Create a new element for the discounted price
+            var discountText = $('<span></span>').text(newTotal.toFixed(2) + ' €');
+            var discountElement = $('<p></p>').text('Neuer Preis: ').append(discountText);
+
+            // Append the discounted price element next to the total price
+            $('#cart-total-sum').after(discountElement);
+
+            // Set the discountApplied flag to true
+            discountApplied = true;
+        }
+    });
+
 
     function addRowToCartTable(item) {
         var price = parseFloat(item.price).toFixed(2);
@@ -48,8 +68,17 @@ $(document).ready(function () {
             }
         });
 
+        // Apply gift code reduction
+        var giftCode = $('#gift-code-input').val().trim();
+        if (giftCode === '10%OFF') {
+            totalPrice *= 0.9; // Reduce the total price by 10%
+        } else if (giftCode !== '' && giftCode !== '10%OFF') {
+            alert('Der eingegebene Gutscheincode ist ungültig.');
+        }
+
         return totalPrice;
     }
+
 
     function saveOrder() {
         var paymentMethod = $('#payment-method').val();
@@ -58,12 +87,22 @@ $(document).ready(function () {
             alert('Please select a payment method.');
             return;
         }
+
+        var cartTotal = calculateTotalPrice();
+        var newTotal = cartTotal; // Initialize with the current total price
+
+        if (discountApplied) { // Check if discount is applied
+            var discountText = $('#cart-total-sum').next('p').find('span').text();
+            newTotal = parseFloat(discountText.replace(' €', ''));
+        }
+
         // AJAX call to save the order
         $.ajax({
             type: 'POST',
             url: 'http://localhost/SoftwareSupply/backend/api/api.php',
             data: JSON.stringify({
                 total_price: cartTotal,
+                discounted_price: newTotal, // Save the discounted price
                 request_type: 'save_order'
             }),
             success: function (response) {
@@ -160,7 +199,7 @@ $(document).ready(function () {
         });
     }
 
-    $('.card-button').click(function () {
+    $('#bestellen').click(function () {
         saveOrder();
     });
 });
