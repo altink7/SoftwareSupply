@@ -143,4 +143,29 @@ class UserDAO {
     public function verifyPassword($password, $hashedPassword) {
         return password_verify($password, $hashedPassword);
     }
+
+    public function updateRememberToken($rememberToken, $userId) {
+        $filePath = 'remember_token.txt';
+
+        if ($rememberToken === null) {
+            if (file_exists($filePath)) {
+                unlink($filePath);
+            }
+        } else {
+            file_put_contents($filePath, $rememberToken);
+        }
+    }
+
+    public function getUserByRememberToken($rememberToken) {
+        $filePath = 'remember_token.txt';
+
+        $storedToken = file_get_contents($filePath);
+
+        if ($storedToken === $rememberToken) {
+            return $this;
+        }
+
+        return null;
+    }
+
 }

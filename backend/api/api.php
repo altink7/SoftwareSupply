@@ -178,16 +178,21 @@ class API {
             // User found and password matches, create a session
             $_SESSION['username'] = $username;
             $_SESSION['loggedin'] = true;
-    
+
             // Generate a unique token or session ID
-            $rememberToken = generateUniqueToken(); // Implement this function to generate a unique token
-    
+            $rememberToken = $this->generateUniqueToken(); // Implement this function to generate a unique token
+
             if ($rememberMe) {
                 // Store the remember token in the user's record in the database
             $this->userDAO->updateRememberToken($username, $rememberToken);
 
             // Set the remember token as a cookie
             setcookie('remember_token', $rememberToken, time() + (86400 * 30), '/'); // Expires in 30 days
+        }else {
+            // Delete the remember token
+            $this->userDAO->updateRememberToken($username, null);
+            //destroy the cookie
+            setcookie('remember_token', '', time() - (86400 * 30), '/');
         }
          
 
@@ -297,18 +302,18 @@ class API {
     public function checkLoginStatus() {
         $loggedIn = false;
         $userProfile = null;
-    
+
         if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true) {
             $loggedIn = true;
             $userProfile = $this->userDAO->getUserProfile($_SESSION['username']);
         } elseif (isset($_COOKIE['remember_token'])) {
             $rememberToken = $_COOKIE['remember_token'];
             $user = $this->userDAO->getUserByRememberToken($rememberToken);
-    
+
             if ($user !== null) {
                 $loggedIn = true;
                 $userProfile = $this->userDAO->getUserProfile($user['username']);
-    
+
                 // Set the session variables
                 $_SESSION['loggedin'] = true;
                 $_SESSION['username'] = $user['username'];
@@ -322,8 +327,11 @@ class API {
     public function handleSaveOrder($data) {
         $username = isset($_SESSION['username']) ? $_SESSION['username'] : '';
         $totalPrice = isset($data['total_price']) ? $data['total_price'] : 0;
+        $discountedPrice = isset($data['discounted_price']) ? $data['discounted_price'] : 0;
+        //discount = total - discounted
+        $discount = $totalPrice - $discountedPrice;
         $userId = $this->userDAO->getUserIdByUsername($username);
-        $orderId = $this->orderDAO->saveOrder($totalPrice, $userId);
+        $orderId = $this->orderDAO->saveOrder($totalPrice, $userId, $discount);
 
         if ($orderId !== null) {
             $this->respond(200, array('status' => 'success', 'order_id' => $orderId));
@@ -378,6 +386,13 @@ class API {
         if ($data !== null) {
             echo json_encode($data);
         }
+    }
+
+    public function generateUniqueToken() {
+        // Generate a random token using a secure method
+        $token = bin2hex(random_bytes(16)); // Generates a 32-character token
+
+        return $token;
     }
 }
 

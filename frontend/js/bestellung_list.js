@@ -84,7 +84,7 @@ $(document).ready(function () {
         var paymentMethod = $('#payment-method').val();
 
         if (paymentMethod === 'none') {
-            alert('Please select a payment method.');
+            alert('Bitte wählen Sie eine Zahlungsmethode aus.');
             return;
         }
 
@@ -94,6 +94,10 @@ $(document).ready(function () {
         if (discountApplied) { // Check if discount is applied
             var discountText = $('#cart-total-sum').next('p').find('span').text();
             newTotal = parseFloat(discountText.replace(' €', ''));
+        }
+
+        if(discountApplied) {
+            cartTotal = cartTotal/0.9;
         }
 
         // AJAX call to save the order

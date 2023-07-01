@@ -1,6 +1,5 @@
 <?php
 include_once '../data/InvoiceDao.php';
-require_once '../vendor/autoload.php';
 require_once '../vendor/setasign/fpdf/fpdf.php';
 
 class InvoiceService {
@@ -43,7 +42,7 @@ class InvoiceService {
 
             $pdf->SetFont('Helvetica', 'I', 12);
             //wirdso berechnet rabatt/ gesamt * 100 = rabatt in %
-            $pdf->Cell(125, 10, 'Rabatt ('.($invoiceData['voucher'] /$invoiceData['total'] * 100).'%)', 1, 0, 'R');
+            $pdf->Cell(125, 10, 'Gutschein ('.($invoiceData['voucher'] /$invoiceData['total'] * 100).'%)', 1, 0, 'R');
             $pdf->Cell(40, 10, "- " . $invoiceData['voucher'] . ' EUR', 1, 1, 'L');
         }
 

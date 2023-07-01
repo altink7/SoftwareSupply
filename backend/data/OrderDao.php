@@ -9,12 +9,13 @@ class OrderDAO {
         $this->invoiceDao = new InvoiceDao();
     }
 
-    public function saveOrder($totalPrice, $userId){
-        $query = "INSERT INTO `order` (user_fk, total) VALUES (:user_fk, :total)";
+    public function saveOrder($totalPrice, $userId, $voucher){
+        $query = "INSERT INTO `order` (user_fk, total, voucher) VALUES (:user_fk, :total, :voucher)";
         $stmt = $this->db->prepare($query);
 
         $stmt->bindParam(':user_fk', $userId);
         $stmt->bindParam(':total', $totalPrice);
+        $stmt->bindParam(':voucher', $voucher);
 
         if ($stmt->execute()) {
             $orderId = $this->db->lastInsertId();
