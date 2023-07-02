@@ -4,7 +4,6 @@ class Database {
     public static $user = "user";
     public static $password = "password";
     public static $database = "softwaresupplydb";
-    private $dbConfig;
     public $conn;
 
     public function __construct() {
