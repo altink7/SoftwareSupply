@@ -28,7 +28,7 @@
             <div class="collapse navbar-collapse justify-content-evenly text-center" id="navbarSupportedContent">
                 <a class="nav-link" href="shop.html">Shop</a>
                 <a class="nav-link" href="about.html">Über Uns</a>
-                <a class="nav-link" href="login.html">Login</a>
+                <a class="nav-link" id="logout-link" href="index.html">Logout</a>
                 <a href="warenkorb.html" class="btn btn-primary shopping-cart-button">
                     <i class="fas fa-shopping-cart"></i>
                 </a>
@@ -37,42 +37,57 @@
         </div>
     </nav>
 
-    <body>
-        <div class="container">
-            <h1 class="mt-4">User Profil</h1>
-            <h2 class="mt-4">Stammdaten</h2>
-            <div class="mt-4">
-                <p><strong>Name: </strong>Max Mustermann</p>
-                <p><strong>Email: </strong>max.mustermann@gmail.com</p>
-                <p><strong>Geburtsdatum: </strong>01.01.1990</p>
-                <p><strong>Adresse: </strong>Musterstraße 123, 12345 Musterstadt</p>
-                <button class="btn btn-primary">Bearbeiten</button>
-            </div>
-
-            <h2 class="mt-4">Bestellungen</h2>
-            <table class="table mt-4">
-                <thead>
-                    <tr>
-                        <th scope="col">#</th>
-                        <th scope="col">Datum</th>
-                        <th scope="col">Produkt</th>
-                        <th scope="col">Anzahl</th>
-                        <th scope="col">Preis</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <th scope="row">1</th>
-                        <td>01.01.2023</td>
-                        <td>Produkt 1</td>
-                        <td>2</td>
-                        <td>€100</td>
-                    </tr>
-                    <!-- Weitere Zeilen für zusätzliche Bestellungen -->
-                </tbody>
-            </table>
+    <div class="container card-deck">
+        <div class="profile-title">
+            <h1><span id="username"></span></h1>
         </div>
-    </body>
+        <div class="row mt-4">
+            <div class="col-md-6">
+                <h3 class="mb-3">Stammdaten</h3>
+                <div class="profile-section">
+                    <p><strong>Vorname:</strong> <span id="first_name"></span> <span id="last_name"></span></p>
+                    <p><strong>Email:</strong> <span id="email"></span></p>
+                    <p><strong>Adresse:</strong> <span id="address"></span></p>
+                    <p><strong>PLZ:</strong> <span id="zip_code"></span></p>
+                    <p><strong>Stadt:</strong> <span id="city"></span></p>
+                    <p><strong>Passwort:</strong> <span id="password"></span></p>
+                    <p><label for="payment"><strong>Zahlungsmethode:</strong></label>
+                        <select class="form-control" id="payment" name="payment" disabled>
+                            <option value="none">-</option>
+                            <option value="PayPal">PayPal</option>
+                            <option value="Credit card">Credit Card</option>
+                            <option value="Klarna">Klarna</option>
+                        </select>
+                    </p>
+
+
+
+
+                    <button id="editButton" class="btn btn-primary">Bearbeiten</button>
+                    <button id="saveButton" class="btn btn-primary" style="display: none;">Speichern</button>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <h2 class="mb-3">Bestellungen</h2>
+                <div class="profile-section">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Bestell Nr.</th>
+                                <th scope="col">Datum</th>
+                                <th scope="col">Letzte Änderung</th>
+                                <th scope="col">TotalPreis</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        <!-- wird ueber AJAX gefuellt -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <footer>
         <ul>
@@ -85,6 +100,10 @@
             <li> <a href="index.html"> <img src="../res/img/favicon.png" width="80" height="80"></a> </li>
         </ul>
     </footer>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="../js/check-login.js"></script>
+    <script src="../js/get-userData.js"></script>
+    <script src="../js/profil.js"></script>
 
 </body>
 

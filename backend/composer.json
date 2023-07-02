@@ -1,0 +1,22 @@
+{
+    "name": "vendor/softwaresupply",
+    "description": "Software Supply",
+    "type": "library",
+    "require": {
+        "skurrier/pdflib": "dev-master",
+        "setasign/fpdf": "^1.8"
+    },
+    "license": "MIT License",
+    "autoload": {
+        "psr-4": {
+            "Vendor\\Softwaresupply\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "altink7",
+            "email": "kelmendialtin48@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev"
+}
