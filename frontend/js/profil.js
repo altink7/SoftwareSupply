@@ -14,7 +14,7 @@ $(document).ready(function() {
                     row.append($('<td>').text(order.id));
                     row.append($('<td>').text(order.created));
                     row.append($('<td>').text(order.updated));
-                    row.append($('<td>').text(order.total + ' €'));
+                    row.append($('<td>').text((order.total - order.voucher) + ' €'));
 
                     var invoiceButton = $('<button>').text('Rechnung').addClass('btn btn-primary');
                     invoiceButton.click(function() {
