@@ -24,7 +24,7 @@ class API {
     }
     
     public function processRequest() {
-        session_set_cookie_params(3600); // Set the cookie lifetime to 1 hour (3600 seconds)
+        session_set_cookie_params(0);
         session_start();
         $request_method = $_SERVER["REQUEST_METHOD"];
         switch ($request_method) {
@@ -183,16 +183,8 @@ class API {
             $rememberToken = $this->generateUniqueToken(); // Implement this function to generate a unique token
 
             if ($rememberMe) {
-                // Store the remember token in the user's record in the database
-            $this->userDAO->updateRememberToken($username, $rememberToken);
-
             // Set the remember token as a cookie
             setcookie('remember_token', $rememberToken, time() + (86400 * 30), '/'); // Expires in 30 days
-        }else {
-            // Delete the remember token
-            $this->userDAO->updateRememberToken($username, null);
-            //destroy the cookie
-            setcookie('remember_token', '', time() - (86400 * 30), '/');
         }
          
 
@@ -308,7 +300,6 @@ class API {
             $userProfile = $this->userDAO->getUserProfile($_SESSION['username']);
         } elseif (isset($_COOKIE['remember_token'])) {
             $rememberToken = $_COOKIE['remember_token'];
-            $user = $this->userDAO->getUserByRememberToken($rememberToken);
 
             if ($user !== null) {
                 $loggedIn = true;
