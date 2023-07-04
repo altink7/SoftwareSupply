@@ -46,11 +46,12 @@ class UserDAO {
         }
     }
 
-    public function getUserProfile($username) {
-        $sql = "SELECT * FROM users WHERE username = :username";
+    public function getUserProfile($usernameOrEmail) {
+        $sql = "SELECT * FROM users WHERE username = :username OR email = :email";
         try {
             $stmt = $this->db->conn->prepare($sql);
-            $stmt->bindParam(':username', $username);
+            $stmt->bindParam(':username', $usernameOrEmail);
+            $stmt->bindParam(':email', $usernameOrEmail);
             $stmt->execute();
             $result = $stmt->fetch(PDO::FETCH_ASSOC);
             return $result;
@@ -74,13 +75,14 @@ class UserDAO {
     }
 
     //find id by username
-    public function getUserIdByUsername($username) {
-        if (empty($username)) return 3;
+    public function getUserIdByUsername($usernameOrEmail) {
+        if (empty($usernameOrEmail)) return 3;
 
-        $sql = "SELECT id FROM users WHERE username = :username";
+        $sql = "SELECT id FROM users WHERE username = :username OR email = :email";
         try {
             $stmt = $this->db->conn->prepare($sql);
-            $stmt->bindParam(':username', $username);
+            $stmt->bindParam(':username', $usernameOrEmail);
+            $stmt->bindParam(':email', $usernameOrEmail);
             $stmt->execute();
             $result = $stmt->fetch(PDO::FETCH_ASSOC);
             return $result['id'];
@@ -89,7 +91,7 @@ class UserDAO {
         }
     }
 
-    public function updateUserProfile($username, $updatedData) {
+    public function updateUserProfile($usernameOrEmail, $updatedData) {
         $sql = "UPDATE users 
                 SET first_name = :first_name, last_name = :last_name, email = :email, 
                     address = :address, postal_code = :postal_code, city = :city";
@@ -101,7 +103,7 @@ class UserDAO {
         }
     
         $sql .= ", payment = :payment 
-                  WHERE username = :username";
+                  WHERE username = :username OR email = :email";
     
         try {
             $stmt = $this->db->conn->prepare($sql);
@@ -118,7 +120,8 @@ class UserDAO {
             }
     
             $stmt->bindParam(':payment', $updatedData['payment']);
-            $stmt->bindParam(':username', $username);
+            $stmt->bindParam(':username', $usernameOrEmail);
+            $stmt->bindParam(':email', $usernameOrEmail);
     
             $result = $stmt->execute();
     
