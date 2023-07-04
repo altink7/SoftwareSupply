@@ -103,7 +103,7 @@ class UserDAO {
         }
     
         $sql .= ", payment = :payment 
-                  WHERE username = :username OR email = :email";
+                  WHERE username = :username";
     
         try {
             $stmt = $this->db->conn->prepare($sql);

@@ -201,7 +201,7 @@ class API {
     
         // Delete the remember token cookie
         if (isset($_COOKIE['remember_token'])) {
-            setcookie('remember_token', '', time() - 3600, '/');
+            setcookie('remember_token', '', time() - (86400 * 30), '/');
         }
     
         $this->respond(200, array('status' => 'success', 'message' => 'Logout successful'));
